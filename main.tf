@@ -68,7 +68,7 @@ resource "vsphere_virtual_machine" "vm" {
       dns_server_list = [var.dns_server_list]
       linux_options {
         host_name = var.pfmp_mgmt_node_1_name
-        domain    = var.domain
+        domain    = var.dns_suffix
       }
     }
   }
