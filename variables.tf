@@ -61,7 +61,7 @@ variable "subnet_netmask" {
 
 variable "dns_server_list" {
   description = "dns server list"
-  type        = string
+  type        = list(string)
 }
 
 variable "dns_suffix" {
