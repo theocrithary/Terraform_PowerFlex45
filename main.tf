@@ -65,7 +65,7 @@ resource "vsphere_virtual_machine" "vm" {
         ipv4_netmask = var.subnet_netmask
       }
       ipv4_gateway = var.subnet_gateway
-      dns_server_list = [var.dns_server_list]
+      dns_server_list = var.dns_server_list
       linux_options {
         host_name = var.pfmp_mgmt_node_1_name
         domain    = var.dns_suffix
