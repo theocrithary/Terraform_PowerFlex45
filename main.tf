@@ -143,3 +143,47 @@ resource "vsphere_virtual_machine" "pfmp-3" {
   }
 }
 
+resource "null_resource" "powerflex45_mgmt_node_1_changerootpassword" {
+  connection {
+      type     = "ssh"
+      user     = "delladmin"
+      password = "delladmin"
+      host     = var.pfmp_mgmt_node_1_ip
+  }
+  // change permissions to executable and pipe its output into a new file
+  provisioner "remote-exec" {
+    inline = [
+      "sudo chpasswd <<<\"root:$root_password\""
+    ]
+  }
+}
+
+resource "null_resource" "powerflex45_mgmt_node_2_changerootpassword" {
+  connection {
+      type     = "ssh"
+      user     = "delladmin"
+      password = "delladmin"
+      host     = var.pfmp_mgmt_node_2_ip
+  }
+  // change permissions to executable and pipe its output into a new file
+  provisioner "remote-exec" {
+    inline = [
+      "sudo chpasswd <<<\"root:$root_password\""
+    ]
+  }
+}
+
+resource "null_resource" "powerflex45_mgmt_node_3_changerootpassword" {
+  connection {
+      type     = "ssh"
+      user     = "delladmin"
+      password = "delladmin"
+      host     = var.pfmp_mgmt_node_3_ip
+  }
+  // change permissions to executable and pipe its output into a new file
+  provisioner "remote-exec" {
+    inline = [
+      "sudo chpasswd <<<\"root:$root_password\""
+    ]
+  }
+}
