@@ -49,12 +49,14 @@ resource "vsphere_virtual_machine" "vm" {
   name             = var.pfmp_mgmt_node_1_name
   resource_pool_id = data.vsphere_compute_cluster.cluster.resource_pool_id
   datastore_id     = data.vsphere_datastore.datastore.id
+  num_cpus         = 4
+  memory           = 4096
   network_interface {
     network_id = data.vsphere_network.network.id
   }
   disk {
     label = "disk0"
-    size  = 600
+    size  = 60
     thin_provisioned = true
   }
   clone {
@@ -74,3 +76,70 @@ resource "vsphere_virtual_machine" "vm" {
     }
   }
 }
+
+## Deployment of PFMP-2 from Template
+resource "vsphere_virtual_machine" "vm" {
+  name             = var.pfmp_mgmt_node_2_name
+  resource_pool_id = data.vsphere_compute_cluster.cluster.resource_pool_id
+  datastore_id     = data.vsphere_datastore.datastore.id
+  num_cpus         = 4
+  memory           = 4096
+  network_interface {
+    network_id = data.vsphere_network.network.id
+  }
+  disk {
+    label = "disk0"
+    size  = 60
+    thin_provisioned = true
+  }
+  clone {
+    template_uuid = data.vsphere_content_library_item.template.id
+    customize {
+      network_interface {
+        ipv4_address = var.pfmp_mgmt_node_2_ip
+        ipv4_netmask = var.subnet_netmask
+      }
+      ipv4_gateway = var.subnet_gateway
+      dns_server_list = [var.dns_server_list]
+      dns_suffix_list = [var.dns_suffix]
+      linux_options {
+        host_name = var.pfmp_mgmt_node_2_name
+        domain    = var.dns_suffix
+      }
+    }
+  }
+}
+
+## Deployment of PFMP-3 from Template
+resource "vsphere_virtual_machine" "vm" {
+  name             = var.pfmp_mgmt_node_3_name
+  resource_pool_id = data.vsphere_compute_cluster.cluster.resource_pool_id
+  datastore_id     = data.vsphere_datastore.datastore.id
+  num_cpus         = 4
+  memory           = 4096
+  network_interface {
+    network_id = data.vsphere_network.network.id
+  }
+  disk {
+    label = "disk0"
+    size  = 60
+    thin_provisioned = true
+  }
+  clone {
+    template_uuid = data.vsphere_content_library_item.template.id
+    customize {
+      network_interface {
+        ipv4_address = var.pfmp_mgmt_node_3_ip
+        ipv4_netmask = var.subnet_netmask
+      }
+      ipv4_gateway = var.subnet_gateway
+      dns_server_list = [var.dns_server_list]
+      dns_suffix_list = [var.dns_suffix]
+      linux_options {
+        host_name = var.pfmp_mgmt_node_3_name
+        domain    = var.dns_suffix
+      }
+    }
+  }
+}
+
