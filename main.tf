@@ -214,7 +214,8 @@ resource "null_resource" "powerflex45_mgmt_node_1_bootstrap" {
       "rm -rf /etc/sysconfig/network/ifcfg-eth1",
       "rm -rf /etc/sysconfig/network/ifcfg-eth2",
       "rm -rf /etc/sysconfig/network/ifcfg-eth3",
-      "shutdown -r now"
+      "shutdown -r now",
+      "echo COMPLETED"
     ]
   }
 }
@@ -237,7 +238,8 @@ resource "null_resource" "powerflex45_mgmt_node_2_bootstrap" {
       "systemctl mask --now firewalld",      
       "echo 'pool pool.ntp.org iburst' >> /etc/chrony.conf",
       "systemctl enable chronyd",
-      "shutdown -r now"
+      "shutdown -r now",
+      "echo COMPLETED"
     ]
   }
 }
@@ -260,7 +262,8 @@ resource "null_resource" "powerflex45_mgmt_node_3_bootstrap" {
       "systemctl mask --now firewalld",      
       "echo 'pool pool.ntp.org iburst' >> /etc/chrony.conf",
       "systemctl enable chronyd",
-      "shutdown -r now"
+      "shutdown -r now",
+      "echo COMPLETED"
     ]
   }
 }
