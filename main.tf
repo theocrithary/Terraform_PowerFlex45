@@ -45,7 +45,7 @@ data "vsphere_content_library_item" "template" {
 }
 
 ## Deployment of PFMP-1 from Template
-resource "vsphere_virtual_machine" "vm" {
+resource "vsphere_virtual_machine" "pfmp-1" {
   name             = var.pfmp_mgmt_node_1_name
   resource_pool_id = data.vsphere_compute_cluster.cluster.resource_pool_id
   datastore_id     = data.vsphere_datastore.datastore.id
@@ -78,7 +78,7 @@ resource "vsphere_virtual_machine" "vm" {
 }
 
 ## Deployment of PFMP-2 from Template
-resource "vsphere_virtual_machine" "vm" {
+resource "vsphere_virtual_machine" "pfmp-2" {
   name             = var.pfmp_mgmt_node_2_name
   resource_pool_id = data.vsphere_compute_cluster.cluster.resource_pool_id
   datastore_id     = data.vsphere_datastore.datastore.id
@@ -111,7 +111,7 @@ resource "vsphere_virtual_machine" "vm" {
 }
 
 ## Deployment of PFMP-3 from Template
-resource "vsphere_virtual_machine" "vm" {
+resource "vsphere_virtual_machine" "pfmp-3" {
   name             = var.pfmp_mgmt_node_3_name
   resource_pool_id = data.vsphere_compute_cluster.cluster.resource_pool_id
   datastore_id     = data.vsphere_datastore.datastore.id
