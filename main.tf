@@ -56,7 +56,7 @@ resource "vsphere_virtual_machine" "pfmp-1" {
   }
   disk {
     label = "disk0"
-    size  = 60
+    size  = 600
     thin_provisioned = true
   }
   clone {
@@ -89,7 +89,7 @@ resource "vsphere_virtual_machine" "pfmp-2" {
   }
   disk {
     label = "disk0"
-    size  = 60
+    size  = 600
     thin_provisioned = true
   }
   clone {
@@ -122,7 +122,7 @@ resource "vsphere_virtual_machine" "pfmp-3" {
   }
   disk {
     label = "disk0"
-    size  = 60
+    size  = 600
     thin_provisioned = true
   }
   clone {
