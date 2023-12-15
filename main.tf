@@ -153,7 +153,7 @@ resource "null_resource" "powerflex45_mgmt_node_1_changerootpassword" {
   // change permissions to executable and pipe its output into a new file
   provisioner "remote-exec" {
     inline = [
-      "sudo chpasswd <<<\root:$var.root_password\"
+      "sudo chpasswd <<<\root:${var.root_password}"
     ]
   }
 }
@@ -168,7 +168,7 @@ resource "null_resource" "powerflex45_mgmt_node_2_changerootpassword" {
   // change permissions to executable and pipe its output into a new file
   provisioner "remote-exec" {
     inline = [
-      "sudo chpasswd <<<\root:$var.root_password\"
+      "sudo chpasswd <<<\root:${var.root_password}"
     ]
   }
 }
@@ -183,7 +183,7 @@ resource "null_resource" "powerflex45_mgmt_node_3_changerootpassword" {
   // change permissions to executable and pipe its output into a new file
   provisioner "remote-exec" {
     inline = [
-      "sudo chpasswd <<<\root:$var.root_password\"
+      "sudo chpasswd <<<\root:${var.root_password}"
     ]
   }
 }
@@ -204,7 +204,7 @@ resource "null_resource" "powerflex45_mgmt_node_1_bootstrap" {
   // change permissions to executable and pipe its output into a new file
   provisioner "remote-exec" {
     inline = [
-      "curl -LO \"https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl\"",
+      "curl -LO https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl",
       "install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl",
       "systemctl stop firewalld",
       "systemctl disable firewalld",
@@ -230,7 +230,7 @@ resource "null_resource" "powerflex45_mgmt_node_2_bootstrap" {
   // change permissions to executable and pipe its output into a new file
   provisioner "remote-exec" {
     inline = [
-      "curl -LO \"https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl\"",
+      "curl -LO https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl",
       "install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl",
       "systemctl stop firewalld",
       "systemctl disable firewalld",
@@ -253,7 +253,7 @@ resource "null_resource" "powerflex45_mgmt_node_3_bootstrap" {
   // change permissions to executable and pipe its output into a new file
   provisioner "remote-exec" {
     inline = [
-      "curl -LO \"https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl\"",
+      "curl -LO https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl",
       "install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl",
       "systemctl stop firewalld",
       "systemctl disable firewalld",
