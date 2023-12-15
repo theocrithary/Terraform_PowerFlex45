@@ -153,7 +153,7 @@ resource "null_resource" "powerflex45_mgmt_node_1_changerootpassword" {
   // change permissions to executable and pipe its output into a new file
   provisioner "remote-exec" {
     inline = [
-      "sudo chpasswd <<<\root:${var.root_password}"
+      "sudo chpasswd <<<root:${var.root_password}"
     ]
   }
 }
@@ -168,7 +168,7 @@ resource "null_resource" "powerflex45_mgmt_node_2_changerootpassword" {
   // change permissions to executable and pipe its output into a new file
   provisioner "remote-exec" {
     inline = [
-      "sudo chpasswd <<<\root:${var.root_password}"
+      "sudo chpasswd <<<root:${var.root_password}"
     ]
   }
 }
@@ -183,7 +183,7 @@ resource "null_resource" "powerflex45_mgmt_node_3_changerootpassword" {
   // change permissions to executable and pipe its output into a new file
   provisioner "remote-exec" {
     inline = [
-      "sudo chpasswd <<<\root:${var.root_password}"
+      "sudo chpasswd <<<root:${var.root_password}"
     ]
   }
 }
