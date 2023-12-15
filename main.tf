@@ -187,3 +187,80 @@ resource "null_resource" "powerflex45_mgmt_node_3_changerootpassword" {
     ]
   }
 }
+
+resource "time_sleep" "wait_for_rootpasswordchange" {
+  create_duration = "20s"
+  depends_on = [ null_resource.powerflex45_mgmt_node_1_changerootpassword, null_resource.powerflex45_mgmt_node_2_changerootpassword, null_resource.powerflex45_mgmt_node_3_changerootpassword ]
+}
+
+resource "null_resource" "powerflex45_mgmt_node_1_bootstrap" {
+  depends_on = [time_sleep.wait_for_rootpasswordchange]
+  connection {
+      type     = "ssh"
+      user     = "root"
+      password = var.root_password
+      host     = var.pfmp_mgmt_node_1_ip
+  }
+  // change permissions to executable and pipe its output into a new file
+  provisioner "remote-exec" {
+    inline = [
+      "curl -LO \"https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl\"",
+      "install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl",
+      "systemctl stop firewalld",
+      "systemctl disable firewalld",
+      "systemctl mask --now firewalld",      
+      "echo 'pool pool.ntp.org iburst' >> /etc/chrony.conf",
+      "systemctl enable chronyd",
+      "rm -rf /etc/sysconfig/network/ifcfg-eth1",
+      "rm -rf /etc/sysconfig/network/ifcfg-eth2",
+      "rm -rf /etc/sysconfig/network/ifcfg-eth3",
+      "reboot"
+    ]
+  }
+}
+
+resource "null_resource" "powerflex45_mgmt_node_2_bootstrap" {
+  depends_on = [time_sleep.wait_for_rootpasswordchange]
+  connection {
+      type     = "ssh"
+      user     = "root"
+      password = var.root_password
+      host     = var.pfmp_mgmt_node_2_ip
+  }
+  // change permissions to executable and pipe its output into a new file
+  provisioner "remote-exec" {
+    inline = [
+      "curl -LO \"https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl\"",
+      "install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl",
+      "systemctl stop firewalld",
+      "systemctl disable firewalld",
+      "systemctl mask --now firewalld",      
+      "echo 'pool pool.ntp.org iburst' >> /etc/chrony.conf",
+      "systemctl enable chronyd",
+      "reboot"
+    ]
+  }
+}
+
+resource "null_resource" "powerflex45_mgmt_node_3_bootstrap" {
+  depends_on = [time_sleep.wait_for_rootpasswordchange]
+  connection {
+      type     = "ssh"
+      user     = "root"
+      password = var.root_password
+      host     = var.pfmp_mgmt_node_3_ip
+  }
+  // change permissions to executable and pipe its output into a new file
+  provisioner "remote-exec" {
+    inline = [
+      "curl -LO \"https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl\"",
+      "install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl",
+      "systemctl stop firewalld",
+      "systemctl disable firewalld",
+      "systemctl mask --now firewalld",      
+      "echo 'pool pool.ntp.org iburst' >> /etc/chrony.conf",
+      "systemctl enable chronyd",
+      "reboot"
+    ]
+  }
+}
