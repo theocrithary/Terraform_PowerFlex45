@@ -379,14 +379,14 @@ resource "null_resource" "pf_installer_changerootpassword" {
     ]
   }
 }
-resource "time_sleep" "wait_for_rootpasswordchange" {
+resource "time_sleep" "wait_for_rootpasswordchange2" {
   create_duration = "20s"
   depends_on = [ null_resource.pf_installer_changerootpassword ]
 }
 
 ## Login as root to disable firewall, setup chrony, 
 resource "null_resource" "pf_installer_bootstrap" {
-  depends_on = [time_sleep.wait_for_rootpasswordchange]
+  depends_on = [time_sleep.wait_for_rootpasswordchange2]
   connection {
       type     = "ssh"
       user     = "root"
