@@ -577,3 +577,70 @@ resource "vsphere_virtual_machine" "powerflex-node-4" {
     }
   }
 }
+
+## Change root password
+
+resource "null_resource" "powerflex_node_1_changerootpassword" {
+  connection {
+      type     = "ssh"
+      user     = var.ubuntu_template_username
+      password = var.ubuntu_template_password
+      host     = var.powerflex_node_1_ip
+  }
+  // change permissions to executable and pipe its output into a new file
+  provisioner "remote-exec" {
+    inline = [
+      "sudo chpasswd <<<root:${var.root_password}"
+    ]
+  }
+}
+
+resource "null_resource" "powerflex_node_2_changerootpassword" {
+  connection {
+      type     = "ssh"
+      user     = var.ubuntu_template_username
+      password = var.ubuntu_template_password
+      host     = var.powerflex_node_2_ip
+  }
+  // change permissions to executable and pipe its output into a new file
+  provisioner "remote-exec" {
+    inline = [
+      "sudo chpasswd <<<root:${var.root_password}"
+    ]
+  }
+}
+
+resource "null_resource" "powerflex_node_3_changerootpassword" {
+  connection {
+      type     = "ssh"
+      user     = var.ubuntu_template_username
+      password = var.ubuntu_template_password
+      host     = var.powerflex_node_3_ip
+  }
+  // change permissions to executable and pipe its output into a new file
+  provisioner "remote-exec" {
+    inline = [
+      "sudo chpasswd <<<root:${var.root_password}"
+    ]
+  }
+}
+
+resource "null_resource" "powerflex_node_4_changerootpassword" {
+  connection {
+      type     = "ssh"
+      user     = var.ubuntu_template_username
+      password = var.ubuntu_template_password
+      host     = var.powerflex_node_4_ip
+  }
+  // change permissions to executable and pipe its output into a new file
+  provisioner "remote-exec" {
+    inline = [
+      "sudo chpasswd <<<root:${var.root_password}"
+    ]
+  }
+}
+
+resource "time_sleep" "wait_for_rootpasswordchange" {
+  create_duration = "20s"
+  depends_on = [ null_resource.powerflex_node_1_changerootpassword, null_resource.powerflex_node_2_changerootpassword, null_resource.powerflex_node_3_changerootpassword, null_resource.powerflex_node_4_changerootpassword ]
+}

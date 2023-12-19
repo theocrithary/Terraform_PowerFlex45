@@ -177,3 +177,13 @@ variable "powerflex_node_4_ip" {
   description = "IP address for storage node 4"
   type        = string
 }
+
+variable "ubuntu_template_username" {
+  description = "username for template used to create storage nodes"
+  type        = string
+}
+
+variable "ubuntu_template_password" {
+  description = "password for template used to create storage nodes"
+  type        = string
+}
