@@ -291,7 +291,7 @@ resource "null_resource" "powerflex45_mgmt_node_3_bootstrap" {
 #######################################################################
 
 ## Deployment of PF Installer VM from Template
-resource "vsphere_virtual_machine" "" {
+resource "vsphere_virtual_machine" "installer-vm" {
   name             = var.pf_installer_vm_name
   resource_pool_id = data.vsphere_compute_cluster.cluster.resource_pool_id
   datastore_id     = data.vsphere_datastore.datastore.id
@@ -326,7 +326,7 @@ resource "vsphere_virtual_machine" "" {
 ## Prepare the PFMP_Config.json file
 
 resource "local_file" "PFMP_Config" {
-  content  = "
+  content  = <<EOT
   {
     "Nodes":
     [
@@ -360,6 +360,7 @@ resource "local_file" "PFMP_Config" {
 }"
   filename = "${path.module}/PFMP_Config.json"
 }
+EOT
 
 ## Change root password
 
