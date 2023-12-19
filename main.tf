@@ -656,7 +656,7 @@ resource "null_resource" "powerflex_node_4_changerootpassword" {
   }
 }
 
-resource "time_sleep" "wait_for_rootpasswordchange" {
+resource "time_sleep" "wait_for_rootpasswordchange3" {
   create_duration = "20s"
   depends_on = [ null_resource.powerflex_node_1_changerootpassword, null_resource.powerflex_node_2_changerootpassword, null_resource.powerflex_node_3_changerootpassword, null_resource.powerflex_node_4_changerootpassword ]
 }
