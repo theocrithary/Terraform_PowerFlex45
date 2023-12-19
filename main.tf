@@ -590,6 +590,7 @@ resource "null_resource" "powerflex_node_1_changerootpassword" {
   // change permissions to executable and pipe its output into a new file
   provisioner "remote-exec" {
     inline = [
+      "#!/bin/bash",
       "sudo chpasswd <<<root:${var.root_password}",
       "sudo sed -i 's/PasswordAuthentication no/PasswordAuthentication yes/PasswordAuthentication yes/g' /etc/ssh/sshd_config",
       "sudo sed -i 's/^#PermitRootLogin prohibit-password/PermitRootLogin yes/g' /etc/ssh/sshd_config",
@@ -609,6 +610,7 @@ resource "null_resource" "powerflex_node_2_changerootpassword" {
   // change permissions to executable and pipe its output into a new file
   provisioner "remote-exec" {
     inline = [
+      "#!/bin/bash",
       "sudo chpasswd <<<root:${var.root_password}",
       "sudo sed -i 's/PasswordAuthentication no/PasswordAuthentication yes/PasswordAuthentication yes/g' /etc/ssh/sshd_config",
       "sudo sed -i 's/^#PermitRootLogin prohibit-password/PermitRootLogin yes/g' /etc/ssh/sshd_config",
@@ -628,6 +630,7 @@ resource "null_resource" "powerflex_node_3_changerootpassword" {
   // change permissions to executable and pipe its output into a new file
   provisioner "remote-exec" {
     inline = [
+      "#!/bin/bash",
       "sudo chpasswd <<<root:${var.root_password}",
       "sudo sed -i 's/PasswordAuthentication no/PasswordAuthentication yes/PasswordAuthentication yes/g' /etc/ssh/sshd_config",
       "sudo sed -i 's/^#PermitRootLogin prohibit-password/PermitRootLogin yes/g' /etc/ssh/sshd_config",
@@ -647,6 +650,7 @@ resource "null_resource" "powerflex_node_4_changerootpassword" {
   // change permissions to executable and pipe its output into a new file
   provisioner "remote-exec" {
     inline = [
+      "#!/bin/bash",
       "sudo chpasswd <<<root:${var.root_password}",
       "sudo sed -i 's/PasswordAuthentication no/PasswordAuthentication yes/PasswordAuthentication yes/g' /etc/ssh/sshd_config",
       "sudo sed -i 's/^#PermitRootLogin prohibit-password/PermitRootLogin yes/g' /etc/ssh/sshd_config",
