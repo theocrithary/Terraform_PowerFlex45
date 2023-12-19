@@ -441,6 +441,7 @@ resource "vsphere_virtual_machine" "powerflex-node-1" {
     label = "disk1"
     size  = 200
     thin_provisioned = true
+    unit_number = 1
   }
   clone {
     template_uuid = data.vsphere_content_library_item.storage_node_template.id
