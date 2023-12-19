@@ -167,3 +167,13 @@ variable "powerflex_node_3_ip" {
   description = "IP address for storage node 3"
   type        = string
 }
+
+variable "powerflex_node_4_name" {
+  description = "Hostname for storage node 4"
+  type        = string
+}
+
+variable "powerflex_node_4_ip" {
+  description = "IP address for storage node 4"
+  type        = string
+}

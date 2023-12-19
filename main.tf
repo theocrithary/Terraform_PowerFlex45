@@ -460,3 +460,120 @@ resource "vsphere_virtual_machine" "powerflex-node-1" {
     }
   }
 }
+
+## Deployment of PowerFlex-Storage-Node-2 VM from Template
+resource "vsphere_virtual_machine" "powerflex-node-2" {
+  name             = var.powerflex_node_2_name
+  resource_pool_id = data.vsphere_compute_cluster.cluster.resource_pool_id
+  datastore_id     = data.vsphere_datastore.datastore.id
+  num_cpus         = 12
+  memory           = 20480
+  network_interface {
+    network_id = data.vsphere_network.network.id
+  }
+  disk {
+    label = "disk0"
+    size  = 32
+    thin_provisioned = true
+  }
+  disk {
+    label = "disk1"
+    size  = 200
+    thin_provisioned = true
+    unit_number = 1
+  }
+  clone {
+    template_uuid = data.vsphere_content_library_item.storage_node_template.id
+    customize {
+      network_interface {
+        ipv4_address = var.powerflex_node_2_ip
+        ipv4_netmask = var.subnet_netmask
+      }
+      ipv4_gateway = var.subnet_gateway
+      dns_server_list = [var.dns_server_list]
+      dns_suffix_list = [var.dns_suffix]
+      linux_options {
+        host_name = var.powerflex_node_2_name
+        domain    = var.dns_suffix
+      }
+    }
+  }
+}
+
+## Deployment of PowerFlex-Storage-Node-3 VM from Template
+resource "vsphere_virtual_machine" "powerflex-node-3" {
+  name             = var.powerflex_node_3_name
+  resource_pool_id = data.vsphere_compute_cluster.cluster.resource_pool_id
+  datastore_id     = data.vsphere_datastore.datastore.id
+  num_cpus         = 12
+  memory           = 20480
+  network_interface {
+    network_id = data.vsphere_network.network.id
+  }
+  disk {
+    label = "disk0"
+    size  = 32
+    thin_provisioned = true
+  }
+  disk {
+    label = "disk1"
+    size  = 200
+    thin_provisioned = true
+    unit_number = 1
+  }
+  clone {
+    template_uuid = data.vsphere_content_library_item.storage_node_template.id
+    customize {
+      network_interface {
+        ipv4_address = var.powerflex_node_3_ip
+        ipv4_netmask = var.subnet_netmask
+      }
+      ipv4_gateway = var.subnet_gateway
+      dns_server_list = [var.dns_server_list]
+      dns_suffix_list = [var.dns_suffix]
+      linux_options {
+        host_name = var.powerflex_node_3_name
+        domain    = var.dns_suffix
+      }
+    }
+  }
+}
+
+## Deployment of PowerFlex-Storage-Node-4 VM from Template
+resource "vsphere_virtual_machine" "powerflex-node-4" {
+  name             = var.powerflex_node_4_name
+  resource_pool_id = data.vsphere_compute_cluster.cluster.resource_pool_id
+  datastore_id     = data.vsphere_datastore.datastore.id
+  num_cpus         = 12
+  memory           = 20480
+  network_interface {
+    network_id = data.vsphere_network.network.id
+  }
+  disk {
+    label = "disk0"
+    size  = 32
+    thin_provisioned = true
+  }
+  disk {
+    label = "disk1"
+    size  = 200
+    thin_provisioned = true
+    unit_number = 1
+  }
+  clone {
+    template_uuid = data.vsphere_content_library_item.storage_node_template.id
+    customize {
+      network_interface {
+        ipv4_address = var.powerflex_node_4_ip
+        ipv4_netmask = var.subnet_netmask
+      }
+      ipv4_gateway = var.subnet_gateway
+      dns_server_list = [var.dns_server_list]
+      dns_suffix_list = [var.dns_suffix]
+      linux_options {
+        host_name = var.powerflex_node_4_name
+        domain    = var.dns_suffix
+      }
+    }
+  }
+}
