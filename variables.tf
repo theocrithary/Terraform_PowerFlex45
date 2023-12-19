@@ -39,8 +39,8 @@ variable "vsphere_content_library" {
   type        = string
 }
 
-variable "vsphere_template" {
-  description = "vSphere template name"
+variable "k8s_template" {
+  description = "k8s template name"
   type        = string
 }
 
