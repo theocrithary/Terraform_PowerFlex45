@@ -54,6 +54,12 @@ data "vsphere_content_library_item" "installer_template" {
   library_id = data.vsphere_content_library.library.id
 }
 
+data "vsphere_content_library_item" "storage_node_template" {
+  name       = var.storage_node_template
+  type       = "ovf"
+  library_id = data.vsphere_content_library.library.id
+}
+
 #######################################################################
 ## Stage 1: Deploy the 3 x PFMP nodes to be used for K8s cluster
 #######################################################################
