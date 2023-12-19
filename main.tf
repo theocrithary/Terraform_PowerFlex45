@@ -349,18 +349,19 @@ resource "local_file" "PFMP_Config" {
     "ServiceReservedIPPoolCIDR" : "10.43.0.0/23",
  
     "RoutableIPPoolCIDR" : [
-	{
-	  "mgmt":"${var.ip_pool_for_pfmp_services}"
-	}
+	  {
+	    "mgmt":"${var.ip_pool_for_pfmp_services}"
+	  }
     ],
+    
     "PFMPHostname" : "${var.hostname_for_pfmp_ui}",
- 
+  
     "PFMPHostIP" : "${var.vip_for_pfmp_ui}"
- 
-}"
+  }
+  EOT
+
   filename = "${path.module}/PFMP_Config.json"
 }
-EOT
 
 ## Change root password
 
