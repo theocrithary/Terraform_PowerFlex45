@@ -663,7 +663,7 @@ resource "time_sleep" "wait_for_rootpasswordchange3" {
 
 ## Login as root to install pre-req packages 
 resource "null_resource" "powerflex_node_1_bootstrap" {
-  depends_on = [time_sleep.wait_for_rootpasswordchange]
+  depends_on = [time_sleep.wait_for_rootpasswordchange3]
   connection {
       type     = "ssh"
       user     = "root"
@@ -680,7 +680,7 @@ resource "null_resource" "powerflex_node_1_bootstrap" {
 
 ## Login as root to install pre-req packages 
 resource "null_resource" "powerflex_node_2_bootstrap" {
-  depends_on = [time_sleep.wait_for_rootpasswordchange]
+  depends_on = [time_sleep.wait_for_rootpasswordchange3]
   connection {
       type     = "ssh"
       user     = "root"
@@ -697,7 +697,7 @@ resource "null_resource" "powerflex_node_2_bootstrap" {
 
 ## Login as root to install pre-req packages 
 resource "null_resource" "powerflex_node_3_bootstrap" {
-  depends_on = [time_sleep.wait_for_rootpasswordchange]
+  depends_on = [time_sleep.wait_for_rootpasswordchange3]
   connection {
       type     = "ssh"
       user     = "root"
@@ -714,7 +714,7 @@ resource "null_resource" "powerflex_node_3_bootstrap" {
 
 ## Login as root to install pre-req packages 
 resource "null_resource" "powerflex_node_4_bootstrap" {
-  depends_on = [time_sleep.wait_for_rootpasswordchange]
+  depends_on = [time_sleep.wait_for_rootpasswordchange3]
   connection {
       type     = "ssh"
       user     = "root"
