@@ -132,3 +132,38 @@ variable "hostname_for_pfmp_ui" {
   description = "PowerFlex management UI hostname (fqdn)"
   type        = string
 }
+
+variable "storage_node_template" {
+  description = "vSphere template  for storage nodes (e.g. Ubuntu 20.04)"
+  type        = string
+}
+
+variable "powerflex_node_1_name" {
+  description = "Hostname for storage node 1"
+  type        = string
+}
+
+variable "powerflex_node_1_ip" {
+  description = "IP address for storage node 1"
+  type        = string
+}
+
+variable "powerflex_node_2_name" {
+  description = "Hostname for storage node 2"
+  type        = string
+}
+
+variable "powerflex_node_2_ip" {
+  description = "IP address for storage node 2"
+  type        = string
+}
+
+variable "powerflex_node_3_name" {
+  description = "Hostname for storage node 3"
+  type        = string
+}
+
+variable "powerflex_node_3_ip" {
+  description = "IP address for storage node 3"
+  type        = string
+}

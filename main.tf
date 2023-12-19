@@ -411,3 +411,45 @@ resource "null_resource" "pf_installer_bootstrap" {
     ]
   }
 }
+
+#######################################################################
+## Stage 3: Deploy the 4 x Storage Node VM's
+#######################################################################
+
+## Deployment of PowerFlex-Storage-Node-1 VM from Template
+resource "vsphere_virtual_machine" "powerflex-node-1" {
+  name             = var.powerflex_node_1_name
+  resource_pool_id = data.vsphere_compute_cluster.cluster.resource_pool_id
+  datastore_id     = data.vsphere_datastore.datastore.id
+  num_cpus         = 12
+  memory           = 20480
+  network_interface {
+    network_id = data.vsphere_network.network.id
+  }
+  disk {
+    label = "disk0"
+    size  = 32
+    thin_provisioned = true
+  }
+  disk {
+    label = "disk1"
+    size  = 200
+    thin_provisioned = true
+  }
+  clone {
+    template_uuid = data.vsphere_content_library_item.storage_node_template.id
+    customize {
+      network_interface {
+        ipv4_address = var.powerflex_node_1_ip
+        ipv4_netmask = var.subnet_netmask
+      }
+      ipv4_gateway = var.subnet_gateway
+      dns_server_list = [var.dns_server_list]
+      dns_suffix_list = [var.dns_suffix]
+      linux_options {
+        host_name = var.powerflex_node_1_name
+        domain    = var.dns_suffix
+      }
+    }
+  }
+}
