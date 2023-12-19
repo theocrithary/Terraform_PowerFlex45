@@ -590,7 +590,11 @@ resource "null_resource" "powerflex_node_1_changerootpassword" {
   // change permissions to executable and pipe its output into a new file
   provisioner "remote-exec" {
     inline = [
-      "sudo chpasswd <<<root:${var.root_password}"
+      "sudo chpasswd <<<root:${var.root_password}",
+      "sudo sed -i 's/PasswordAuthentication no/PasswordAuthentication yes/PasswordAuthentication yes/g' /etc/ssh/sshd_config",
+      "sudo sed -i 's/^#PermitRootLogin prohibit-password/PermitRootLogin yes/g' /etc/ssh/sshd_config",
+      "sudo /etc/init.d/ssh force-reload",
+      "sudo /etc/init.d/ssh restart"
     ]
   }
 }
@@ -605,7 +609,11 @@ resource "null_resource" "powerflex_node_2_changerootpassword" {
   // change permissions to executable and pipe its output into a new file
   provisioner "remote-exec" {
     inline = [
-      "sudo chpasswd <<<root:${var.root_password}"
+      "sudo chpasswd <<<root:${var.root_password}",
+      "sudo sed -i 's/PasswordAuthentication no/PasswordAuthentication yes/PasswordAuthentication yes/g' /etc/ssh/sshd_config",
+      "sudo sed -i 's/^#PermitRootLogin prohibit-password/PermitRootLogin yes/g' /etc/ssh/sshd_config",
+      "sudo /etc/init.d/ssh force-reload",
+      "sudo /etc/init.d/ssh restart"
     ]
   }
 }
@@ -620,7 +628,11 @@ resource "null_resource" "powerflex_node_3_changerootpassword" {
   // change permissions to executable and pipe its output into a new file
   provisioner "remote-exec" {
     inline = [
-      "sudo chpasswd <<<root:${var.root_password}"
+      "sudo chpasswd <<<root:${var.root_password}",
+      "sudo sed -i 's/PasswordAuthentication no/PasswordAuthentication yes/PasswordAuthentication yes/g' /etc/ssh/sshd_config",
+      "sudo sed -i 's/^#PermitRootLogin prohibit-password/PermitRootLogin yes/g' /etc/ssh/sshd_config",
+      "sudo /etc/init.d/ssh force-reload",
+      "sudo /etc/init.d/ssh restart"
     ]
   }
 }
@@ -635,7 +647,11 @@ resource "null_resource" "powerflex_node_4_changerootpassword" {
   // change permissions to executable and pipe its output into a new file
   provisioner "remote-exec" {
     inline = [
-      "sudo chpasswd <<<root:${var.root_password}"
+      "sudo chpasswd <<<root:${var.root_password}",
+      "sudo sed -i 's/PasswordAuthentication no/PasswordAuthentication yes/PasswordAuthentication yes/g' /etc/ssh/sshd_config",
+      "sudo sed -i 's/^#PermitRootLogin prohibit-password/PermitRootLogin yes/g' /etc/ssh/sshd_config",
+      "sudo /etc/init.d/ssh force-reload",
+      "sudo /etc/init.d/ssh restart"
     ]
   }
 }
@@ -643,4 +659,72 @@ resource "null_resource" "powerflex_node_4_changerootpassword" {
 resource "time_sleep" "wait_for_rootpasswordchange" {
   create_duration = "20s"
   depends_on = [ null_resource.powerflex_node_1_changerootpassword, null_resource.powerflex_node_2_changerootpassword, null_resource.powerflex_node_3_changerootpassword, null_resource.powerflex_node_4_changerootpassword ]
+}
+
+## Login as root to install pre-req packages 
+resource "null_resource" "powerflex_node_1_bootstrap" {
+  depends_on = [time_sleep.wait_for_rootpasswordchange]
+  connection {
+      type     = "ssh"
+      user     = "root"
+      password = var.root_password
+      host     = var.powerflex_node_1_ip
+  }
+  provisioner "remote-exec" {
+    inline = [
+      "apt update -y",
+      "apt install unzip sshpass numactl libaio1 wget libapr1 libaprutil1 bash-completion binutils openjdk-11-jdk-headless smartmontools sg3-utils hdparm pciutils sysstat jq openssl libaio1 linux-image-extra-virtual libnuma1 -y"
+    ]
+  }
+}
+
+## Login as root to install pre-req packages 
+resource "null_resource" "powerflex_node_2_bootstrap" {
+  depends_on = [time_sleep.wait_for_rootpasswordchange]
+  connection {
+      type     = "ssh"
+      user     = "root"
+      password = var.root_password
+      host     = var.powerflex_node_2_ip
+  }
+  provisioner "remote-exec" {
+    inline = [
+      "apt update -y",
+      "apt install unzip sshpass numactl libaio1 wget libapr1 libaprutil1 bash-completion binutils openjdk-11-jdk-headless smartmontools sg3-utils hdparm pciutils sysstat jq openssl libaio1 linux-image-extra-virtual libnuma1 -y"
+    ]
+  }
+}
+
+## Login as root to install pre-req packages 
+resource "null_resource" "powerflex_node_3_bootstrap" {
+  depends_on = [time_sleep.wait_for_rootpasswordchange]
+  connection {
+      type     = "ssh"
+      user     = "root"
+      password = var.root_password
+      host     = var.powerflex_node_3_ip
+  }
+  provisioner "remote-exec" {
+    inline = [
+      "apt update -y",
+      "apt install unzip sshpass numactl libaio1 wget libapr1 libaprutil1 bash-completion binutils openjdk-11-jdk-headless smartmontools sg3-utils hdparm pciutils sysstat jq openssl libaio1 linux-image-extra-virtual libnuma1 -y"
+    ]
+  }
+}
+
+## Login as root to install pre-req packages 
+resource "null_resource" "powerflex_node_4_bootstrap" {
+  depends_on = [time_sleep.wait_for_rootpasswordchange]
+  connection {
+      type     = "ssh"
+      user     = "root"
+      password = var.root_password
+      host     = var.powerflex_node_4_ip
+  }
+  provisioner "remote-exec" {
+    inline = [
+      "apt update -y",
+      "apt install unzip sshpass numactl libaio1 wget libapr1 libaprutil1 bash-completion binutils openjdk-11-jdk-headless smartmontools sg3-utils hdparm pciutils sysstat jq openssl libaio1 linux-image-extra-virtual libnuma1 -y"
+    ]
+  }
 }
