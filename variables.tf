@@ -103,3 +103,32 @@ variable "root_password" {
   description = "default root password"
   type        = string
 }
+
+variable "pf_installer_vm_name" {
+  description = "PowerFlex installer VM name"
+  type        = string
+}
+
+variable "pf_installer_ip" {
+  description = "PowerFlex installer IP address"
+  type        = string
+}
+
+variable "pf_installer_template" {
+  description = "PowerFlex installer template name"
+  type        = string
+}
+
+variable "ip_pool_for_pfmp_services" {
+  description = "IP pool (5 required) for K8s ingress services"
+  type        = string
+}
+variable "vip_for_pfmp_ui" {
+  description = "PowerFlex management UI virtual IP"
+  type        = string
+}
+
+variable "hostname_for_pfmp_ui" {
+  description = "PowerFlex management UI hostname (fqdn)"
+  type        = string
+}

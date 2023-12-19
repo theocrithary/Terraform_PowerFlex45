@@ -1,3 +1,7 @@
+#######################################################################
+## Init: Setup variables to connect to vCenter server
+#######################################################################
+
 provider "vsphere" {
   user = var.vsphere_user
   password = var.vsphere_password
@@ -38,19 +42,29 @@ data "vsphere_content_library" "library" {
   name = var.vsphere_content_library
 }
 
-data "vsphere_content_library_item" "template" {
-  name       = var.vsphere_template
+data "vsphere_content_library_item" "k8s_template" {
+  name       = var.k8s_template
   type       = "ovf"
   library_id = data.vsphere_content_library.library.id
 }
+
+data "vsphere_content_library_item" "installer_template" {
+  name       = var.pf_installer_template
+  type       = "ovf"
+  library_id = data.vsphere_content_library.library.id
+}
+
+#######################################################################
+## Stage 1: Deploy the 3 x PFMP nodes to be used for K8s cluster
+#######################################################################
 
 ## Deployment of PFMP-1 from Template
 resource "vsphere_virtual_machine" "pfmp-1" {
   name             = var.pfmp_mgmt_node_1_name
   resource_pool_id = data.vsphere_compute_cluster.cluster.resource_pool_id
   datastore_id     = data.vsphere_datastore.datastore.id
-  num_cpus         = 4
-  memory           = 4096
+  num_cpus         = 14
+  memory           = 32768
   network_interface {
     network_id = data.vsphere_network.network.id
   }
@@ -60,7 +74,7 @@ resource "vsphere_virtual_machine" "pfmp-1" {
     thin_provisioned = true
   }
   clone {
-    template_uuid = data.vsphere_content_library_item.template.id
+    template_uuid = data.vsphere_content_library_item.k8s_template.id
     customize {
       network_interface {
         ipv4_address = var.pfmp_mgmt_node_1_ip
@@ -93,7 +107,7 @@ resource "vsphere_virtual_machine" "pfmp-2" {
     thin_provisioned = true
   }
   clone {
-    template_uuid = data.vsphere_content_library_item.template.id
+    template_uuid = data.vsphere_content_library_item.k8s_template.id
     customize {
       network_interface {
         ipv4_address = var.pfmp_mgmt_node_2_ip
@@ -126,7 +140,7 @@ resource "vsphere_virtual_machine" "pfmp-3" {
     thin_provisioned = true
   }
   clone {
-    template_uuid = data.vsphere_content_library_item.template.id
+    template_uuid = data.vsphere_content_library_item.k8s_template.id
     customize {
       network_interface {
         ipv4_address = var.pfmp_mgmt_node_3_ip
@@ -142,6 +156,8 @@ resource "vsphere_virtual_machine" "pfmp-3" {
     }
   }
 }
+
+## Change root password
 
 resource "null_resource" "powerflex45_mgmt_node_1_changerootpassword" {
   connection {
@@ -192,6 +208,8 @@ resource "time_sleep" "wait_for_rootpasswordchange" {
   create_duration = "20s"
   depends_on = [ null_resource.powerflex45_mgmt_node_1_changerootpassword, null_resource.powerflex45_mgmt_node_2_changerootpassword, null_resource.powerflex45_mgmt_node_3_changerootpassword ]
 }
+
+## Login with root account and disable firewall, setup chrony, install kubectl client, remove additional NIC config files and reboot server
 
 resource "null_resource" "powerflex45_mgmt_node_1_bootstrap" {
   depends_on = [time_sleep.wait_for_rootpasswordchange]
@@ -262,6 +280,130 @@ resource "null_resource" "powerflex45_mgmt_node_3_bootstrap" {
       "systemctl mask --now firewalld",      
       "echo 'pool pool.ntp.org iburst' >> /etc/chrony.conf",
       "systemctl enable chronyd",
+      "sudo reboot &",
+      "echo REBOOTING"
+    ]
+  }
+}
+
+#######################################################################
+## Stage 2: Deploy the installer VM
+#######################################################################
+
+## Deployment of PF Installer VM from Template
+resource "vsphere_virtual_machine" "" {
+  name             = var.pf_installer_vm_name
+  resource_pool_id = data.vsphere_compute_cluster.cluster.resource_pool_id
+  datastore_id     = data.vsphere_datastore.datastore.id
+  num_cpus         = 8
+  memory           = 8192
+  network_interface {
+    network_id = data.vsphere_network.network.id
+  }
+  disk {
+    label = "disk0"
+    size  = 100
+    thin_provisioned = true
+  }
+  clone {
+    template_uuid = data.vsphere_content_library_item.installer_template.id
+    customize {
+      network_interface {
+        ipv4_address = var.pf_installer_ip
+        ipv4_netmask = var.subnet_netmask
+      }
+      ipv4_gateway = var.subnet_gateway
+      dns_server_list = [var.dns_server_list]
+      dns_suffix_list = [var.dns_suffix]
+      linux_options {
+        host_name = var.pf_installer_vm_name
+        domain    = var.dns_suffix
+      }
+    }
+  }
+}
+
+## Prepare the PFMP_Config.json file
+
+resource "local_file" "PFMP_Config" {
+  content  = "
+  {
+    "Nodes":
+    [
+      {
+        "hostname": "${var.pfmp_mgmt_node_1_name}",
+        "ipaddress": "${var.pfmp_mgmt_node_1_ip}"
+      },
+      {
+        "hostname": "${var.pfmp_mgmt_node_2_name}",
+        "ipaddress": "${var.pfmp_mgmt_node_2_ip}"
+      },
+      {
+        "hostname": "${var.pfmp_mgmt_node_3_name}",
+        "ipaddress": "${var.pfmp_mgmt_node_3_ip}"
+      }
+    ],
+ 
+    "ClusterReservedIPPoolCIDR" : "10.42.0.0/23",
+ 
+    "ServiceReservedIPPoolCIDR" : "10.43.0.0/23",
+ 
+    "RoutableIPPoolCIDR" : [
+	{
+	  "mgmt":"${var.ip_pool_for_pfmp_services}"
+	}
+    ],
+    "PFMPHostname" : "${var.hostname_for_pfmp_ui}",
+ 
+    "PFMPHostIP" : "${var.vip_for_pfmp_ui}"
+ 
+}"
+  filename = "${path.module}/PFMP_Config.json"
+}
+
+## Change root password
+
+resource "null_resource" "pf_installer_changerootpassword" {
+  connection {
+      type     = "ssh"
+      user     = "delladmin"
+      password = "delladmin"
+      host     = var.pf_installer_ip
+  }
+
+  provisioner "remote-exec" {
+    inline = [
+      "sudo chpasswd <<<root:${var.root_password}"
+    ]
+  }
+}
+resource "time_sleep" "wait_for_rootpasswordchange" {
+  create_duration = "20s"
+  depends_on = [ null_resource.pf_installer_changerootpassword ]
+}
+
+## Login as root to disable firewall, setup chrony, 
+resource "null_resource" "pf_installer_bootstrap" {
+  depends_on = [time_sleep.wait_for_rootpasswordchange]
+  connection {
+      type     = "ssh"
+      user     = "root"
+      password = var.root_password
+      host     = var.pf_installer_ip
+  }
+    provisioner "file" {
+    source      = "PFMP_Config.json"
+    destination = "/opt/dell/pfmp/PFMP_Installer/config/PFMP_Config.json"
+  }
+  
+  provisioner "remote-exec" {
+    inline = [
+      "systemctl stop firewalld",
+      "systemctl disable firewalld",
+      "systemctl mask --now firewalld",      
+      "echo 'pool pool.ntp.org iburst' >> /etc/chrony.conf",
+      "systemctl enable chronyd",
+      "sysctl -w net.ipv4.ip_forward=1",
       "sudo reboot &",
       "echo REBOOTING"
     ]
