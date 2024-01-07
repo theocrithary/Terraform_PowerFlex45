@@ -592,7 +592,7 @@ resource "null_resource" "powerflex_node_1_changerootpassword" {
     inline = [
       "printf ${var.ubuntu_template_password} | sudo -S apt update -y",
       "printf \"${var.root_password}\n${var.root_password}\" | sudo passwd root",
-      "sudo sed -i 's/#PasswordAuthentication no/PasswordAuthentication yes/' /etc/ssh/sshd_config",
+      "sudo sed -i 's/#PasswordAuthentication yes/PasswordAuthentication yes/' /etc/ssh/sshd_config",
       "sudo sed -i 's/#PermitRootLogin prohibit-password/PermitRootLogin yes/' /etc/ssh/sshd_config"
     ]
   }
@@ -610,7 +610,7 @@ resource "null_resource" "powerflex_node_2_changerootpassword" {
     inline = [
       "printf ${var.ubuntu_template_password} | sudo -S apt update -y",
       "printf \"${var.root_password}\n${var.root_password}\" | sudo passwd root",
-      "sudo sed -i 's/#PasswordAuthentication no/PasswordAuthentication yes/' /etc/ssh/sshd_config",
+      "sudo sed -i 's/#PasswordAuthentication yes/PasswordAuthentication yes/' /etc/ssh/sshd_config",
       "sudo sed -i 's/#PermitRootLogin prohibit-password/PermitRootLogin yes/' /etc/ssh/sshd_config"
     ]
   }
@@ -628,7 +628,7 @@ resource "null_resource" "powerflex_node_3_changerootpassword" {
     inline = [
       "printf ${var.ubuntu_template_password} | sudo -S apt update -y",
       "printf \"${var.root_password}\n${var.root_password}\" | sudo passwd root",
-      "sudo sed -i 's/#PasswordAuthentication no/PasswordAuthentication yes/' /etc/ssh/sshd_config",
+      "sudo sed -i 's/#PasswordAuthentication yes/PasswordAuthentication yes/' /etc/ssh/sshd_config",
       "sudo sed -i 's/#PermitRootLogin prohibit-password/PermitRootLogin yes/' /etc/ssh/sshd_config"
     ]
   }
@@ -646,7 +646,7 @@ resource "null_resource" "powerflex_node_4_changerootpassword" {
     inline = [
       "printf ${var.ubuntu_template_password} | sudo -S apt update -y",
       "printf \"${var.root_password}\n${var.root_password}\" | sudo passwd root",
-      "sudo sed -i 's/#PasswordAuthentication no/PasswordAuthentication yes/' /etc/ssh/sshd_config",
+      "sudo sed -i 's/#PasswordAuthentication yes/PasswordAuthentication yes/' /etc/ssh/sshd_config",
       "sudo sed -i 's/#PermitRootLogin prohibit-password/PermitRootLogin yes/' /etc/ssh/sshd_config"
     ]
   }
