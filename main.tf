@@ -15,12 +15,12 @@ data "vsphere_datacenter" "datacenter" {
 
 data "vsphere_datastore" "datastore" {
   name = var.vsphere_datastore
-  datacenter_id = "${data.vsphere_datacenter.datacenter.id}"
+  datacenter_id = data.vsphere_datacenter.datacenter.id
 }
 
 data "vsphere_network" "network" {
   name = var.vsphere_network
-  datacenter_id = "${data.vsphere_datacenter.datacenter.id}"
+  datacenter_id = data.vsphere_datacenter.datacenter.id
 }
 
 data "vsphere_compute_cluster" "cluster" {
@@ -35,7 +35,7 @@ data "vsphere_resource_pool" "default" {
 
 data "vsphere_host" "host" {
   name = var.vsphere_host
-  datacenter_id = "${data.vsphere_datacenter.datacenter.id}"
+  datacenter_id = data.vsphere_datacenter.datacenter.id
 }
 
 data "vsphere_content_library" "library" {
@@ -69,7 +69,7 @@ resource "vsphere_folder" "folder" {
 }
 
 data "vsphere_folder" "folder" {
-  path = "/${data.datacenter}/vm/${var.vsphere_folder}"
+  path = "\/${data.datacenter}\/vm\/${var.vsphere_folder}"
 }
 
 #######################################################################
