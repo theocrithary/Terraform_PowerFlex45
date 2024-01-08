@@ -65,7 +65,7 @@ data "vsphere_content_library_item" "storage_node_template" {
 resource "vsphere_folder" "folder" {
   path          = var.vsphere_folder
   type          = "vm"
-  datacenter_id = data.vsphere_datacenter.dc.id
+  datacenter_id = data.vsphere_datacenter.datacenter.id
 }
 
 data "vsphere_folder" "folder" {
