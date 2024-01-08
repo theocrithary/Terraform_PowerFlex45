@@ -613,7 +613,7 @@ resource "vsphere_virtual_machine" "powerflex-node-4" {
 
 resource "time_sleep" "wait_for_storage_vm_creation" {
   create_duration = "120s"
-  depends_on = [ vsphere_virtual_machine.powerflex_node_1, vsphere_virtual_machine.powerflex_node_2, vsphere_virtual_machine.powerflex_node_3, vsphere_virtual_machine.powerflex_node_4 ]
+  depends_on = [ vsphere_virtual_machine.powerflex-node-1, vsphere_virtual_machine.powerflex-node-2, vsphere_virtual_machine.powerflex-node-3, vsphere_virtual_machine.powerflex-node-4 ]
 }
 
 ## Change root password
