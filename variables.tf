@@ -24,6 +24,11 @@ variable "vsphere_cluster" {
   type        = string
 }
 
+variable "vsphere_folder" {
+  description = "vSphere folder"
+  type        = string
+}
+
 variable "vsphere_datastore" {
   description = "vSphere datastore"
   type        = string
