@@ -68,9 +68,6 @@ resource "vsphere_folder" "folder" {
   datacenter_id = data.vsphere_datacenter.datacenter.id
 }
 
-data "vsphere_folder" "folder" {
-  path = "\/${data.datacenter}\/vm\/${var.vsphere_folder}"
-}
 
 #######################################################################
 ## Stage 1: Deploy the 3 x PFMP nodes to be used for K8s cluster
@@ -81,7 +78,7 @@ resource "vsphere_virtual_machine" "pfmp-1" {
   name             = var.pfmp_mgmt_node_1_name
   resource_pool_id = data.vsphere_compute_cluster.cluster.resource_pool_id
   datastore_id     = data.vsphere_datastore.datastore.id
-  folder           = data.vsphere_folder
+  folder           = "/${data.datacenter}/vm/${var.vsphere_folder}"
   num_cpus         = 14
   memory           = 32768
   network_interface {
@@ -115,7 +112,7 @@ resource "vsphere_virtual_machine" "pfmp-2" {
   name             = var.pfmp_mgmt_node_2_name
   resource_pool_id = data.vsphere_compute_cluster.cluster.resource_pool_id
   datastore_id     = data.vsphere_datastore.datastore.id
-  folder           = data.vsphere_folder
+  folder           = "/${data.datacenter}/vm/${var.vsphere_folder}"
   num_cpus         = 4
   memory           = 4096
   network_interface {
@@ -149,7 +146,7 @@ resource "vsphere_virtual_machine" "pfmp-3" {
   name             = var.pfmp_mgmt_node_3_name
   resource_pool_id = data.vsphere_compute_cluster.cluster.resource_pool_id
   datastore_id     = data.vsphere_datastore.datastore.id
-  folder           = data.vsphere_folder
+  folder           = "/${data.datacenter}/vm/${var.vsphere_folder}"
   num_cpus         = 4
   memory           = 4096
   network_interface {
@@ -316,7 +313,7 @@ resource "vsphere_virtual_machine" "installer-vm" {
   name             = var.pf_installer_vm_name
   resource_pool_id = data.vsphere_compute_cluster.cluster.resource_pool_id
   datastore_id     = data.vsphere_datastore.datastore.id
-  folder           = data.vsphere_folder
+  folder           = "/${data.datacenter}/vm/${var.vsphere_folder}"
   num_cpus         = 8
   memory           = 8192
   network_interface {
@@ -443,7 +440,7 @@ resource "vsphere_virtual_machine" "powerflex-node-1" {
   name             = var.powerflex_node_1_name
   resource_pool_id = data.vsphere_compute_cluster.cluster.resource_pool_id
   datastore_id     = data.vsphere_datastore.datastore.id
-  folder           = data.vsphere_folder
+  folder           = "/${data.datacenter}/vm/${var.vsphere_folder}"
   num_cpus         = 12
   memory           = 20480
   network_interface {
@@ -483,7 +480,7 @@ resource "vsphere_virtual_machine" "powerflex-node-2" {
   name             = var.powerflex_node_2_name
   resource_pool_id = data.vsphere_compute_cluster.cluster.resource_pool_id
   datastore_id     = data.vsphere_datastore.datastore.id
-  folder           = data.vsphere_folder
+  folder           = "/${data.datacenter}/vm/${var.vsphere_folder}"
   num_cpus         = 12
   memory           = 20480
   network_interface {
@@ -523,7 +520,7 @@ resource "vsphere_virtual_machine" "powerflex-node-3" {
   name             = var.powerflex_node_3_name
   resource_pool_id = data.vsphere_compute_cluster.cluster.resource_pool_id
   datastore_id     = data.vsphere_datastore.datastore.id
-  folder           = data.vsphere_folder
+  folder           = "/${data.datacenter}/vm/${var.vsphere_folder}"
   num_cpus         = 12
   memory           = 20480
   network_interface {
@@ -563,7 +560,7 @@ resource "vsphere_virtual_machine" "powerflex-node-4" {
   name             = var.powerflex_node_4_name
   resource_pool_id = data.vsphere_compute_cluster.cluster.resource_pool_id
   datastore_id     = data.vsphere_datastore.datastore.id
-  folder           = data.vsphere_folder
+  folder           = "/${data.datacenter}/vm/${var.vsphere_folder}"
   num_cpus         = 12
   memory           = 20480
   network_interface {
