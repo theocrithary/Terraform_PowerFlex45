@@ -175,9 +175,16 @@ resource "vsphere_virtual_machine" "pfmp-3" {
   }
 }
 
+## Wait for VM to be created
+
+resource "time_sleep" "wait_for_mgmt_vm_creation" {
+  create_duration = "120s"
+  depends_on = [ vsphere_virtual_machine.pfmp-1, vsphere_virtual_machine.pfmp-2, vsphere_virtual_machine.pfmp-3 ]
+}
+
 ## Change root password
 
-resource "null_resource" "powerflex45_mgmt_node_1_changerootpassword" {
+resource "null_resource" "powerflex_mgmt_node_1_changerootpassword" {
   connection {
       type     = "ssh"
       user     = "delladmin"
@@ -192,7 +199,7 @@ resource "null_resource" "powerflex45_mgmt_node_1_changerootpassword" {
   }
 }
 
-resource "null_resource" "powerflex45_mgmt_node_2_changerootpassword" {
+resource "null_resource" "powerflex_mgmt_node_2_changerootpassword" {
   connection {
       type     = "ssh"
       user     = "delladmin"
@@ -207,7 +214,7 @@ resource "null_resource" "powerflex45_mgmt_node_2_changerootpassword" {
   }
 }
 
-resource "null_resource" "powerflex45_mgmt_node_3_changerootpassword" {
+resource "null_resource" "powerflex_mgmt_node_3_changerootpassword" {
   connection {
       type     = "ssh"
       user     = "delladmin"
@@ -223,13 +230,13 @@ resource "null_resource" "powerflex45_mgmt_node_3_changerootpassword" {
 }
 
 resource "time_sleep" "wait_for_rootpasswordchange" {
-  create_duration = "120s"
-  depends_on = [ null_resource.powerflex45_mgmt_node_1_changerootpassword, null_resource.powerflex45_mgmt_node_2_changerootpassword, null_resource.powerflex45_mgmt_node_3_changerootpassword ]
+  create_duration = "20s"
+  depends_on = [ null_resource.powerflex_mgmt_node_1_changerootpassword, null_resource.powerflex_mgmt_node_2_changerootpassword, null_resource.powerflex_mgmt_node_3_changerootpassword ]
 }
 
 ## Login with root account and disable firewall, setup chrony, install kubectl client, remove additional NIC config files and reboot server
 
-resource "null_resource" "powerflex45_mgmt_node_1_bootstrap" {
+resource "null_resource" "powerflex_mgmt_node_1_bootstrap" {
   depends_on = [time_sleep.wait_for_rootpasswordchange]
   connection {
       type     = "ssh"
@@ -256,7 +263,7 @@ resource "null_resource" "powerflex45_mgmt_node_1_bootstrap" {
   }
 }
 
-resource "null_resource" "powerflex45_mgmt_node_2_bootstrap" {
+resource "null_resource" "powerflex_mgmt_node_2_bootstrap" {
   depends_on = [time_sleep.wait_for_rootpasswordchange]
   connection {
       type     = "ssh"
@@ -280,7 +287,7 @@ resource "null_resource" "powerflex45_mgmt_node_2_bootstrap" {
   }
 }
 
-resource "null_resource" "powerflex45_mgmt_node_3_bootstrap" {
+resource "null_resource" "powerflex_mgmt_node_3_bootstrap" {
   depends_on = [time_sleep.wait_for_rootpasswordchange]
   connection {
       type     = "ssh"
@@ -380,6 +387,13 @@ resource "local_file" "PFMP_Config" {
   EOT
 
   filename = "${path.module}/PFMP_Config.json"
+}
+
+## Wait for VM to be created
+
+resource "time_sleep" "wait_for_install_vm_creation" {
+  create_duration = "120s"
+  depends_on = [ vsphere_virtual_machine.installer-vm ]
 }
 
 ## Change root password
@@ -593,6 +607,13 @@ resource "vsphere_virtual_machine" "powerflex-node-4" {
       }
     }
   }
+}
+
+## Wait for VM to be created
+
+resource "time_sleep" "wait_for_storage_vm_creation" {
+  create_duration = "120s"
+  depends_on = [ vsphere_virtual_machine.powerflex_node_1, vsphere_virtual_machine.powerflex_node_2, vsphere_virtual_machine.powerflex_node_3, vsphere_virtual_machine.powerflex_node_4 ]
 }
 
 ## Change root password
