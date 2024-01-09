@@ -42,15 +42,16 @@ vi terraform.tfvars
 terraform init && terraform plan && terraform apply -auto-approve
 ```
 
-# Run the setup installer script
-
-SSH to the installer VM with root account
+# SSH to the installer VM with root account
 ```
 ssh root@<pf_installer_ip>  ## use the ip address of the installer VM
 ```
+
+# Run the setup installer script
 ```
 /opt/dell/pfmp/PFMP_Installer/scripts/setup_installer.sh
 ```
+
 # Run the installer script
 ```
 /opt/dell/pfmp/PFMP_Installer/scripts/install_PFMP.sh
@@ -62,7 +63,7 @@ Please enter the ssh password for the nodes specified in the PFMP_Config.json.
 Password:<root_password>
 
 ** This process will take some time to complete, allow an hour or so to finish all tasks **
-* You can monitor the progress with the below log file
+** You can monitor the progress with the below log file
 ```
 tail -f /opt/dell/pfmp/atlantic/logs/bedrock.log
 ```
