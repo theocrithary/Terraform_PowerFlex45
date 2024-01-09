@@ -798,9 +798,13 @@ resource "null_resource" "pfmp-installer-scripts" {
       "/opt/dell/pfmp/PFMP_Installer/scripts/install_PFMP.sh",
       "sleep 10",
       "No",
+      "sleep 10",
       "root",
+      "sleep 10",
       "${var.root_password}",
+      "sleep 10",
       "Yes",
+      "sleep 10",
       "${var.root_password}"
     ]
   }
