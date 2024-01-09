@@ -41,3 +41,25 @@ vi terraform.tfvars
 ```
 terraform init && terraform plan && terraform apply -auto-approve
 ```
+
+# Troubleshooting
+
+## Timeout errors
+All actions are idempotent, so you can run the following command as many times as needed to complete the build successfully.
+```
+terraform apply -auto-approve
+```
+If you get any errors or the process does not complete, try running it again.
+Once completed, you should see a message similar to the below;
+```
+Apply complete! Resources: 0 added, 8 changed, 0 destroyed.
+```
+
+## Unable to login to 1 or more nodes
+Try manually logging in to the effected host with either the 'ubuntu' or 'root' account
+If you are unable to login to root, but ubuntu is accessible, then try restarting the SSH daemon
+```
+sudo service sshd restart
+exit
+terraform apply -auto-approve
+```
