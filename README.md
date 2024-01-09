@@ -73,6 +73,28 @@ Password:<root_password>
 tail -f /opt/dell/pfmp/atlantic/logs/bedrock.log
 ```
 
+# Login to PowerFlex Manager & perform initial setup
+
+- Use a browser to open the PowerFlex Manager console
+https://powerflex.iac.ssc/
+
+- Login with the default user account
+admin / Admin123!
+
+- Change the password when prompted
+
+- Step through the Initial Config Wizard and select "I want to deploy a new instance of PowerFlex"
+
+- Upload the compliance bundle (PowerFlex_Software_4.5.0.0_287_r1.zip) - requires a file share to host the file
+
+- Upload the compatibility management version file (cm-20230901.gpg)
+     - Settings -> compatibility management -> upload file
+
+- Configure the networks
+      - powerflex-mgmt		VLAN 990  172.24.166.65-172.24.166.68
+
+
+
 # Troubleshooting
 
 ## Timeout errors
