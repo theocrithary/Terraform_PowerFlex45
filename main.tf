@@ -794,7 +794,14 @@ resource "null_resource" "pfmp-installer-scripts" {
   provisioner "remote-exec" {
     inline = [
       "/opt/dell/pfmp/PFMP_Installer/scripts/setup_installer.sh",
-      "/opt/dell/pfmp/PFMP_Installer/scripts/install_PFMP.sh"
+      "sleep 60",
+      "/opt/dell/pfmp/PFMP_Installer/scripts/install_PFMP.sh",
+      "sleep 10",
+      "No",
+      "root",
+      "${var.root_password}",
+      "Yes",
+      "${var.root_password}"
     ]
   }
 }
