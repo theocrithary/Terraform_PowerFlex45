@@ -58,15 +58,17 @@ ssh root@<pf_installer_ip>  ## use the ip address of the installer VM
 ## Run the installer script
 ```
 /opt/dell/pfmp/PFMP_Installer/scripts/install_PFMP.sh
-```
-Are ssh keys used for authentication connecting to the cluster nodes[Y]?:no\n
-Please enter the ssh username for the nodes specified in the PFMP_Config.json[root]:<enter>\n
-Are passwords the same for all the cluster nodes[Y]?:<enter>\n
-Please enter the ssh password for the nodes specified in the PFMP_Config.json.\n
-Password:<root_password>\n
 
-** This process will take some time to complete, allow an hour or so to finish all tasks **\n
-** You can monitor the progress with the below log file;
+Are ssh keys used for authentication connecting to the cluster nodes[Y]?:no
+Please enter the ssh username for the nodes specified in the PFMP_Config.json[root]:<enter>
+Are passwords the same for all the cluster nodes[Y]?:<enter>
+Please enter the ssh password for the nodes specified in the PFMP_Config.json.
+Password:<root_password>
+```
+
+- This process will take some time to complete, allow an hour or so to finish all tasks
+- You can monitor the progress with the below log file;
+
 ```
 tail -f /opt/dell/pfmp/atlantic/logs/bedrock.log
 ```
@@ -78,15 +80,16 @@ All actions are idempotent, so you can run the following command as many times a
 ```
 terraform apply -auto-approve
 ```
-If you get any errors or the process does not complete, try running it again.\n
-Once completed, you should see a message similar to the below;
+- If you get any errors or the process does not complete, try running it again.
+- Once completed, you should see a message similar to the below;
 ```
 Apply complete! Resources: 0 added, 8 changed, 0 destroyed.
 ```
 
 ## Unable to login to 1 or more nodes
-Try manually logging in to the effected host with either the 'ubuntu' or 'root' account\n
-If you are unable to login to root, but ubuntu is accessible, then try restarting the SSH daemon
+- Try manually logging in to the effected host with either the 'ubuntu' or 'root' account
+- If you are unable to login to root, but ubuntu is accessible, then try restarting the SSH daemon
+
 ```
 sudo service sshd restart
 exit
