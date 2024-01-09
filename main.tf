@@ -408,8 +408,7 @@ resource "null_resource" "pf_installer_changerootpassword" {
 
   provisioner "remote-exec" {
     inline = [
-      "sudo chpasswd <<<root:${var.root_password}",
-      "sudo chpasswd <<<delladmin:${var.root_password}"
+      "sudo chpasswd <<<root:${var.root_password}"
     ]
   }
 }
