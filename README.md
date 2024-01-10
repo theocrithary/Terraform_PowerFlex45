@@ -28,6 +28,7 @@ cd Terraform_PowerFlex45
 ```
 
 ## Rename tfvars file for environment variables
+
 ```
 mv terraform.tfvars.example terraform.tfvars
 ```
