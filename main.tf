@@ -23,6 +23,11 @@ data "vsphere_network" "network" {
   datacenter_id = data.vsphere_datacenter.datacenter.id
 }
 
+data "vsphere_network" "replication" {
+  name = var.vsphere_network
+  datacenter_id = data.vsphere_datacenter.datacenter.id
+}
+
 data "vsphere_compute_cluster" "cluster" {
   name          = var.vsphere_cluster
   datacenter_id = data.vsphere_datacenter.datacenter.id
@@ -461,7 +466,7 @@ resource "vsphere_virtual_machine" "powerflex-node-1" {
     network_id = data.vsphere_network.network.id
   }
   network_interface {
-    network_id = data.vsphere_network.network.id
+    network_id = data.vsphere_network.replication.id
   }
   disk {
     label = "disk0"
@@ -508,7 +513,7 @@ resource "vsphere_virtual_machine" "powerflex-node-2" {
     network_id = data.vsphere_network.network.id
   }
   network_interface {
-    network_id = data.vsphere_network.network.id
+    network_id = data.vsphere_network.replication.id
   }
   disk {
     label = "disk0"
@@ -555,7 +560,7 @@ resource "vsphere_virtual_machine" "powerflex-node-3" {
     network_id = data.vsphere_network.network.id
   }
   network_interface {
-    network_id = data.vsphere_network.network.id
+    network_id = data.vsphere_network.replication.id
   }
   disk {
     label = "disk0"
@@ -602,7 +607,7 @@ resource "vsphere_virtual_machine" "powerflex-node-4" {
     network_id = data.vsphere_network.network.id
   }
   network_interface {
-    network_id = data.vsphere_network.network.id
+    network_id = data.vsphere_network.replication.id
   }
   disk {
     label = "disk0"
