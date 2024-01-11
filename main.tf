@@ -23,11 +23,6 @@ data "vsphere_network" "network" {
   datacenter_id = data.vsphere_datacenter.datacenter.id
 }
 
-data "vsphere_network" "replication" {
-  name = var.vsphere_network
-  datacenter_id = data.vsphere_datacenter.datacenter.id
-}
-
 data "vsphere_compute_cluster" "cluster" {
   name          = var.vsphere_cluster
   datacenter_id = data.vsphere_datacenter.datacenter.id
@@ -465,9 +460,6 @@ resource "vsphere_virtual_machine" "powerflex-node-1" {
   network_interface {
     network_id = data.vsphere_network.network.id
   }
-  network_interface {
-    network_id = data.vsphere_network.replication.id
-  }
   disk {
     label = "disk0"
     size  = 32
@@ -484,10 +476,6 @@ resource "vsphere_virtual_machine" "powerflex-node-1" {
     customize {
       network_interface {
         ipv4_address = var.powerflex_node_1_ip
-        ipv4_netmask = var.subnet_netmask
-      }
-      network_interface {
-        ipv4_address = var.powerflex_node_1_rep_ip
         ipv4_netmask = var.subnet_netmask
       }
       ipv4_gateway = var.subnet_gateway
@@ -512,9 +500,6 @@ resource "vsphere_virtual_machine" "powerflex-node-2" {
   network_interface {
     network_id = data.vsphere_network.network.id
   }
-  network_interface {
-    network_id = data.vsphere_network.replication.id
-  }
   disk {
     label = "disk0"
     size  = 32
@@ -531,10 +516,6 @@ resource "vsphere_virtual_machine" "powerflex-node-2" {
     customize {
       network_interface {
         ipv4_address = var.powerflex_node_2_ip
-        ipv4_netmask = var.subnet_netmask
-      }
-      network_interface {
-        ipv4_address = var.powerflex_node_2_rep_ip
         ipv4_netmask = var.subnet_netmask
       }
       ipv4_gateway = var.subnet_gateway
@@ -559,9 +540,6 @@ resource "vsphere_virtual_machine" "powerflex-node-3" {
   network_interface {
     network_id = data.vsphere_network.network.id
   }
-  network_interface {
-    network_id = data.vsphere_network.replication.id
-  }
   disk {
     label = "disk0"
     size  = 32
@@ -578,10 +556,6 @@ resource "vsphere_virtual_machine" "powerflex-node-3" {
     customize {
       network_interface {
         ipv4_address = var.powerflex_node_3_ip
-        ipv4_netmask = var.subnet_netmask
-      }
-      network_interface {
-        ipv4_address = var.powerflex_node_3_rep_ip
         ipv4_netmask = var.subnet_netmask
       }
       ipv4_gateway = var.subnet_gateway
@@ -606,9 +580,6 @@ resource "vsphere_virtual_machine" "powerflex-node-4" {
   network_interface {
     network_id = data.vsphere_network.network.id
   }
-  network_interface {
-    network_id = data.vsphere_network.replication.id
-  }
   disk {
     label = "disk0"
     size  = 32
@@ -625,10 +596,6 @@ resource "vsphere_virtual_machine" "powerflex-node-4" {
     customize {
       network_interface {
         ipv4_address = var.powerflex_node_4_ip
-        ipv4_netmask = var.subnet_netmask
-      }
-      network_interface {
-        ipv4_address = var.powerflex_node_4_rep_ip
         ipv4_netmask = var.subnet_netmask
       }
       ipv4_gateway = var.subnet_gateway
