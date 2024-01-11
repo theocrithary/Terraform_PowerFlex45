@@ -460,6 +460,9 @@ resource "vsphere_virtual_machine" "powerflex-node-1" {
   network_interface {
     network_id = data.vsphere_network.network.id
   }
+  network_interface {
+    network_id = data.vsphere_network.network.id
+  }
   disk {
     label = "disk0"
     size  = 32
@@ -501,6 +504,9 @@ resource "vsphere_virtual_machine" "powerflex-node-2" {
   folder           = "/${var.vsphere_datacenter}/vm/${var.vsphere_folder}"
   num_cpus         = 12
   memory           = 20480
+  network_interface {
+    network_id = data.vsphere_network.network.id
+  }
   network_interface {
     network_id = data.vsphere_network.network.id
   }
@@ -548,6 +554,9 @@ resource "vsphere_virtual_machine" "powerflex-node-3" {
   network_interface {
     network_id = data.vsphere_network.network.id
   }
+  network_interface {
+    network_id = data.vsphere_network.network.id
+  }
   disk {
     label = "disk0"
     size  = 32
@@ -589,6 +598,9 @@ resource "vsphere_virtual_machine" "powerflex-node-4" {
   folder           = "/${var.vsphere_datacenter}/vm/${var.vsphere_folder}"
   num_cpus         = 12
   memory           = 20480
+  network_interface {
+    network_id = data.vsphere_network.network.id
+  }
   network_interface {
     network_id = data.vsphere_network.network.id
   }

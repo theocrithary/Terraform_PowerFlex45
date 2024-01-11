@@ -1,5 +1,27 @@
 # Pre-requisites
 
+## Setup a vSphere content library & add the required templates
+
+- Download and import the PFMP Installation OVA and PFMP K8s OVA
+- PFMP2-4.5.0-1189.ova (24.7GB)
+- pfmp-k8s-153L-20230809.ova (1.73GB)
+- Create a Ubuntu template to be used for the storage nodes
+      - Ubuntu 20.04
+      - 12 vCPU
+      - 20GB memory
+      - Disk 1: 32GB
+      - Disk 2: 200GB
+      - NIC 1: primary network
+      - NIC 2: replication network
+- All 3 templates should be added to a single content library with the names of the library and templates added to the tfvars file we will setup in the next steps
+
+## SSH to the admin VM
+
+- Use a Linux VM to act as the bastion or admin server that can run Terraform scripts and connect to the vCenter server as well as the network that will be used for PowerFlex
+```
+ssh root@nova-admin.lab.local
+```
+
 ## Install Terraform
 https://developer.hashicorp.com/terraform/install
 
