@@ -80,8 +80,6 @@ ssh root@<pf_installer_ip>  ## use the ip address of the installer VM
 
 ## Run the installer script
 ```
-/opt/dell/pfmp/PFMP_Installer/scripts/install_PFMP.sh
-
 Are ssh keys used for authentication connecting to the cluster nodes[Y]?:no
 Please enter the ssh username for the nodes specified in the PFMP_Config.json[root]:<enter>
 Are passwords the same for all the cluster nodes[Y]?:<enter>
@@ -130,7 +128,7 @@ admin / Admin123!
       - Subnet Mask: 255.255.255.0
       - Gateway: 192.168.10.1
       - Primary DNS: 192.168.10.10
-      - Secondary DNS: 192.168.10.69-192.168.10.72
+      - Secondary DNS: 192.168.10.12
       - DNS Suffix: lab.local
       - IP Address Range
       - Role: Server or Client
@@ -138,19 +136,19 @@ admin / Admin123!
       - Ending IP: 192.168.10.72
 
       - Define networks -> Define
-      - Name: powerflex-mgmt
-      - Network Type: PowerFlex Data
+      - Name: powerflex-replication
+      - Network Type: PowerFlex 
       - VLAN ID: 1
       - Subnet: 192.168.10.0
       - Subnet Mask: 255.255.255.0
       - Gateway: 192.168.10.1
       - Primary DNS: 192.168.10.10
-      - Secondary DNS: 192.168.10.69-192.168.10.72
+      - Secondary DNS: 192.168.10.12
       - DNS Suffix: lab.local
       - IP Address Range
       - Role: Server or Client
-      - Starting IP: 192.168.10.69
-      - Ending IP: 192.168.10.72
+      - Starting IP: 192.168.10.74
+      - Ending IP: 192.168.10.77
 
 - Discover Resources
       - Resource Type: Node (Software Management)
@@ -197,6 +195,75 @@ admin / Admin123!
       - MDM Virtual IP Source: User Entered IP
       - PowerFlex-data IP Source: Manual Entry
       - PowerFlex-data IP Address: 192.168.10.73 (a seperate IP assigned as the VIP for the MDM cluster)
+
+# Install the SDC client on a Linux host
+
+### RHEL
+- Obtain the following files from the complete SW package and transfer to Linux host
+      - RPM-GPG-KEY-ScaleIO_4.5.0.287
+      - EMC-ScaleIO-sdc-4.5-0.287.el9.x86_64.rpm
+
+- Run the following commands to install the SDC client and connect it to the MDM;
+```
+rpm --import RPM-GPG-KEY-ScaleIO_4.5.0.287
+MDM_IP=192.168.10.73 rpm -i EMC-ScaleIO-sdc-4.5-0.287.el8.x86_64.rpm
+service scini status
+systemctl status scini
+```
+- Check that the MDM has been configured correctly
+```
+/opt/emc/scaleio/sdc/bin/drv_cfg --query_mdms
+```
+- Check if there are any existing volumes mapped to this host
+```
+/opt/emc/scaleio/sdc/bin/drv_cfg --query_vols
+```
+
+# Create a volume and map it to the SDC client
+- Login to PowerFlex Manager console
+- Navigate to the 'Block' storage tab and select 'Hosts'
+- Observe the newly added SDC client host IP
+- Navigate to the 'Block' tab and select 'Volumes'
+- Click '+ Create Volume'
+- Provide a name, size and select a storage pool, then click create
+- After the volume is created, click 'map' when you see the popup in the bottom left corner of the console
+- Selec the SDC client from the host list and click 'map'
+
+# Confirm the volume was presented to the host, format and mount the new volume for use
+- SSH back into the SDC client
+```
+ssh root@192.168.10.17
+```
+- Scan for any new volumes
+```
+/opt/emc/scaleio/sdc/bin/drv_cfg --rescan
+```
+- Confirm the volume was connected
+```
+/opt/emc/scaleio/sdc/bin/drv_cfg --query_vols
+```
+- Check the new block device and take note of the device name (e.g. scinia)
+```
+lsblk -f
+```
+- Format the device with a filesystem (e.g. EXT4)
+```
+mkfs -t ext4 /dev/scinia
+```
+- Create a new directory to mount the device
+```
+mkdir /data1
+```
+- Mount the device to the new directory
+```
+mount /dev/scinia /data1
+```
+- Change to the path and create a test file to confirm read/write access to the volume
+```
+cd /data1
+touch testfile
+```
+
 
 
 
