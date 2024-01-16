@@ -59,14 +59,16 @@ mv terraform.tfvars.example terraform.tfvars
 ```
 vi terraform.tfvars
 ```
-# Step 1: Run the Terraform build to setup all required VM's
+# Step 1: Run the Terraform build
 
 ## Initialize, run the plan and apply the Terraform
 ```
-terraform init && terraform plan && terraform apply -auto-approve
+terraform init
+terraform plan
+terraform apply -auto-approve
 ```
 
-# Step 2: Run the installer scripts to setup and install the PFMP
+# Step 2: Run the PFMP installer scripts
 
 ## SSH to the installer VM with root account
 ```
@@ -98,19 +100,21 @@ tail -f /opt/dell/pfmp/atlantic/logs/bedrock.log
 
 - Once the above script has completed and confirmed via the logs, you can then power off and delete the PFMP installer VM by logging into the vSphere client manually.
 
-# Login to PowerFlex Manager & perform initial setup
+# Step 3: Login to PowerFlex Manager to complete setup
 
-- Use a browser to open the PowerFlex Manager console
-https://powerflex.iac.ssc/
+- Use a browser to open the PowerFlex Manager console; https://powerflex.iac.ssc/
 
 - Login with the default user account
+```
 admin / Admin123!
+```
 
 - Change the password when prompted
 
 - Step through the Initial Config Wizard and select "I want to deploy a new instance of PowerFlex"
 
-- Upload the compliance bundle (PowerFlex_Software_4.5.0.0_287_r1.zip) - requires a CIFs/SMB file share to host the file or a web server such as AWS S3 with a public URL such as https://pflex-packages.s3.eu-west-1.amazonaws.com/pflex-45/Software_Only_Complete_4.5.0_287/PowerFlex_Software_4.5.0.0_287_r1.zip
+- Upload the compliance bundle (PowerFlex_Software_4.5.0.0_287_r1.zip) 
+      - requires a CIFs/SMB file share to host the file or a web server such as AWS S3 with a public URL such as https://pflex-packages.s3.eu-west-1.amazonaws.com/pflex-45/Software_Only_Complete_4.5.0_287/PowerFlex_Software_4.5.0.0_287_r1.zip
 
 - The package download will take a few mins to complete, but will raise a critical warning. Action it by allowing unsigned package.
 
@@ -120,6 +124,7 @@ admin / Admin123!
 - Go back to the installation configuration wizard page by navigating to the ? in the top right and clicking on 'getting started'
 
 - Configure the networks
+s
       - Define networks -> Define
       - Name: powerflex-data
       - Network Type: PowerFlex Data
