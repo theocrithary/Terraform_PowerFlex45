@@ -239,7 +239,7 @@ systemctl status scini
 - After the volume is created, click 'map' when you see the popup in the bottom left corner of the console
 - Selec the SDC client from the host list and click 'map'
 
-# Step 7: Confirm the volume was presented to the host, format and mount the new volume for use
+# Step 7: Test the volume
 - SSH back into the SDC client
 ```
 ssh root@192.168.10.17
