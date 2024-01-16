@@ -157,20 +157,23 @@ admin / Admin123!
       - Ending IP: 192.168.10.77
 ```
 - Discover Resources
+```
       - Resource Type: Node (Software Management)
       - IP/Hostname Range: Start IP: 192.168.10.69 End IP: 192.168.10.72
       - Resource State: Managed
       - Discover into Node Pool: Global
       - Credentials: click on the + icon and create a new OS Admin credential with the root password for the storage nodes
-
+```
 # Install PowerFlex software on storage nodes to create MDM cluster with 4 x SDS nodes
 
 - Confirm discovered resources by navigating to the 'Resources' tab and exploring the node and node pool details
+```
       - Compliance: Unknown
       - Deployment Status: Not in Use
       - Managed State: Managed
-
+```
 - Create a new template by navigating to the 'Lifecycle' tab and selecting 'Templates'
+```
       - Create
       - Create a new template and provide a name
       - Select a template category and select the 'PowerFlex 4.5.0.0' firmware and software compliance
@@ -192,8 +195,9 @@ admin / Admin123!
       - Target Gateway: PowerFlex System
       - All other settings as default and save
       - Publish Template
-
+```
 - Deploy a new resource group
+```
       - Select the template and click 'Deploy Resource Group'
       - Provide a name for the resource group and click next
       - Use all the default settings, except the following;
@@ -201,7 +205,7 @@ admin / Admin123!
       - MDM Virtual IP Source: User Entered IP
       - PowerFlex-data IP Source: Manual Entry
       - PowerFlex-data IP Address: 192.168.10.73 (a seperate IP assigned as the VIP for the MDM cluster)
-
+```
 # Install the SDC client on a Linux host
 
 ### RHEL
