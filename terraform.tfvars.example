@@ -39,3 +39,7 @@ powerflex_node_3_name       = "****************"       # e.g. "powerflex-node-3"
 powerflex_node_3_ip         = "****************"       # e.g. "192.168.10.71"
 powerflex_node_4_name       = "****************"       # e.g. "powerflex-node-4"
 powerflex_node_4_ip         = "****************"       # e.g. "192.168.10.72"
+
+root_password               = "****************"
+ubuntu_template_username    = "****************"       # e.g. "ubuntu"
+ubuntu_template_password    = "****************"
