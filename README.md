@@ -164,7 +164,7 @@ admin / Admin123!
       - Discover into Node Pool: Global
       - Credentials: click on the + icon and create a new OS Admin credential with the root password for the storage nodes
 ```
-# Install PowerFlex software on storage nodes to create MDM cluster with 4 x SDS nodes
+# Step 4: Install PowerFlex software on SDS storage nodes
 
 - Confirm discovered resources by navigating to the 'Resources' tab and exploring the node and node pool details
 ```
@@ -206,7 +206,7 @@ admin / Admin123!
       - PowerFlex-data IP Source: Manual Entry
       - PowerFlex-data IP Address: 192.168.10.73 (a seperate IP assigned as the VIP for the MDM cluster)
 ```
-# Install the SDC client on a Linux host
+# Step 5: Install the SDC client on a Linux host
 
 ### RHEL
 - Obtain the following files from the complete SW package and transfer to Linux host
@@ -229,7 +229,7 @@ systemctl status scini
 /opt/emc/scaleio/sdc/bin/drv_cfg --query_vols
 ```
 
-# Create a volume and map it to the SDC client
+# Step 6: Create a volume and map it to the SDC client
 - Login to PowerFlex Manager console
 - Navigate to the 'Block' storage tab and select 'Hosts'
 - Observe the newly added SDC client host IP
@@ -239,7 +239,7 @@ systemctl status scini
 - After the volume is created, click 'map' when you see the popup in the bottom left corner of the console
 - Selec the SDC client from the host list and click 'map'
 
-# Confirm the volume was presented to the host, format and mount the new volume for use
+# Step 7: Confirm the volume was presented to the host, format and mount the new volume for use
 - SSH back into the SDC client
 ```
 ssh root@192.168.10.17
@@ -280,7 +280,7 @@ touch testfile
 
 
 
-# Troubleshooting
+# ---- Troubleshooting ----
 
 ## Timeout errors
 All actions are idempotent, so you can run the following command as many times as needed to complete the build successfully.
