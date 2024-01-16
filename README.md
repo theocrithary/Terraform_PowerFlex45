@@ -124,7 +124,7 @@ admin / Admin123!
 - Go back to the installation configuration wizard page by navigating to the ? in the top right and clicking on 'getting started'
 
 - Configure the networks
-s
+```
       - Define networks -> Define
       - Name: powerflex-data
       - Network Type: PowerFlex Data
@@ -139,7 +139,8 @@ s
       - Role: Server or Client
       - Starting IP: 192.168.10.69
       - Ending IP: 192.168.10.72
-
+```
+```
       - Define networks -> Define
       - Name: powerflex-replication
       - Network Type: PowerFlex 
@@ -154,7 +155,7 @@ s
       - Role: Server or Client
       - Starting IP: 192.168.10.74
       - Ending IP: 192.168.10.77
-
+```
 - Discover Resources
       - Resource Type: Node (Software Management)
       - IP/Hostname Range: Start IP: 192.168.10.69 End IP: 192.168.10.72
