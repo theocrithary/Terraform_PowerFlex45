@@ -82,6 +82,9 @@ ssh root@<pf_installer_ip>  ## use the ip address of the installer VM
 
 ## Run the installer script
 ```
+/opt/dell/pfmp/PFMP_Installer/scripts/install_PFMP.sh
+```
+```
 Are ssh keys used for authentication connecting to the cluster nodes[Y]?:no
 Please enter the ssh username for the nodes specified in the PFMP_Config.json[root]:<enter>
 Are passwords the same for all the cluster nodes[Y]?:<enter>
