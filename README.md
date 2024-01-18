@@ -1,3 +1,5 @@
+- Credit is also given to Ambar Hassani https://github.com/thecloudgarage for contributing and sharing some of the Terraform source code.
+
 # Pre-requisites
 
 ## Setup a vSphere content library & add the required templates
@@ -117,7 +119,7 @@ admin / Admin123!
 - Step through the Initial Config Wizard and select "I want to deploy a new instance of PowerFlex"
 
 - Upload the compliance bundle (PowerFlex_Software_4.5.0.0_287_r1.zip) 
-      - requires a CIFs/SMB file share to host the file or a web server such as AWS S3 with a public URL such as https://pflex-packages.s3.eu-west-1.amazonaws.com/pflex-45/Software_Only_Complete_4.5.0_287/PowerFlex_Software_4.5.0.0_287_r1.zip
+      - requires a CIFs/SMB file share to host the file or a web server such as AWS S3 with a public URL
 
 - The package download will take a few mins to complete, but will raise a critical warning. Action it by allowing unsigned package.
 
