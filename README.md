@@ -1,3 +1,5 @@
+- A video demonstrating the complete process is provided at this link; https://www.youtube.com/watch?v=FaFBhr6N3w4
+
 - Credit is also given to Ambar Hassani https://github.com/thecloudgarage for contributing and sharing some of the Terraform source code.
 
 # Pre-requisites
