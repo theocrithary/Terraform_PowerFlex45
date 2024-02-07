@@ -715,7 +715,9 @@ resource "null_resource" "powerflex_node_1_bootstrap" {
   provisioner "remote-exec" {
     inline = [
       "apt update -y",
-      "apt install unzip sshpass numactl libaio1 wget libapr1 libaprutil1 bash-completion binutils openjdk-11-jdk-headless smartmontools sg3-utils hdparm pciutils sysstat jq openssl libaio1 linux-image-extra-virtual libnuma1 -y"
+      "apt install unzip sshpass numactl libaio1 wget libapr1 libaprutil1 bash-completion binutils openjdk-11-jdk-headless smartmontools sg3-utils hdparm pciutils sysstat jq openssl libaio1 linux-image-extra-virtual libnuma1 -y",
+      "sed -i '/- ${powerflex_node_1_ip}/a\        - ${powerflex_node_1_ip_rep}/${subnet_netmask}' /etc/netplan/99-netcfg-vmware.yaml",
+      "netplan apply"
     ]
   }
 }
@@ -732,7 +734,9 @@ resource "null_resource" "powerflex_node_2_bootstrap" {
   provisioner "remote-exec" {
     inline = [
       "apt update -y",
-      "apt install unzip sshpass numactl libaio1 wget libapr1 libaprutil1 bash-completion binutils openjdk-11-jdk-headless smartmontools sg3-utils hdparm pciutils sysstat jq openssl libaio1 linux-image-extra-virtual libnuma1 -y"
+      "apt install unzip sshpass numactl libaio1 wget libapr1 libaprutil1 bash-completion binutils openjdk-11-jdk-headless smartmontools sg3-utils hdparm pciutils sysstat jq openssl libaio1 linux-image-extra-virtual libnuma1 -y",
+      "sed -i '/- ${powerflex_node_2_ip}/a\        - ${powerflex_node_2_ip_rep}/${subnet_netmask}' /etc/netplan/99-netcfg-vmware.yaml",
+      "netplan apply"
     ]
   }
 }
@@ -749,7 +753,9 @@ resource "null_resource" "powerflex_node_3_bootstrap" {
   provisioner "remote-exec" {
     inline = [
       "apt update -y",
-      "apt install unzip sshpass numactl libaio1 wget libapr1 libaprutil1 bash-completion binutils openjdk-11-jdk-headless smartmontools sg3-utils hdparm pciutils sysstat jq openssl libaio1 linux-image-extra-virtual libnuma1 -y"
+      "apt install unzip sshpass numactl libaio1 wget libapr1 libaprutil1 bash-completion binutils openjdk-11-jdk-headless smartmontools sg3-utils hdparm pciutils sysstat jq openssl libaio1 linux-image-extra-virtual libnuma1 -y",
+      "sed -i '/- ${powerflex_node_1_ip}/a\        - ${powerflex_node_1_ip_rep}/${subnet_netmask}' /etc/netplan/99-netcfg-vmware.yaml",
+      "netplan apply"
     ]
   }
 }
@@ -766,7 +772,9 @@ resource "null_resource" "powerflex_node_4_bootstrap" {
   provisioner "remote-exec" {
     inline = [
       "apt update -y",
-      "apt install unzip sshpass numactl libaio1 wget libapr1 libaprutil1 bash-completion binutils openjdk-11-jdk-headless smartmontools sg3-utils hdparm pciutils sysstat jq openssl libaio1 linux-image-extra-virtual libnuma1 -y"
+      "apt install unzip sshpass numactl libaio1 wget libapr1 libaprutil1 bash-completion binutils openjdk-11-jdk-headless smartmontools sg3-utils hdparm pciutils sysstat jq openssl libaio1 linux-image-extra-virtual libnuma1 -y",
+      "sed -i '/- ${powerflex_node_1_ip}/a\        - ${powerflex_node_1_ip_rep}/${subnet_netmask}' /etc/netplan/99-netcfg-vmware.yaml",
+      "netplan apply"
     ]
   }
 }
