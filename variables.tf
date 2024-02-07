@@ -39,11 +39,6 @@ variable "vsphere_network" {
   type        = string
 }
 
-variable "vsphere_rep_network" {
-  description = "vSphere replication network name"
-  type        = string
-}
-
 variable "vsphere_content_library" {
   description = "vSphere content library"
   type        = string
