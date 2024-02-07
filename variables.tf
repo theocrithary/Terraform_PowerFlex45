@@ -153,6 +153,11 @@ variable "powerflex_node_1_ip" {
   type        = string
 }
 
+variable "powerflex_node_1_ip_rep" {
+  description = "replication IP address for storage node 1"
+  type        = string
+}
+
 variable "powerflex_node_2_name" {
   description = "Hostname for storage node 2"
   type        = string
@@ -160,6 +165,11 @@ variable "powerflex_node_2_name" {
 
 variable "powerflex_node_2_ip" {
   description = "IP address for storage node 2"
+  type        = string
+}
+
+variable "powerflex_node_2_ip_rep" {
+  description = "replication IP address for storage node 2"
   type        = string
 }
 
@@ -173,6 +183,11 @@ variable "powerflex_node_3_ip" {
   type        = string
 }
 
+variable "powerflex_node_3_ip_rep" {
+  description = "replication IP address for storage node 3"
+  type        = string
+}
+
 variable "powerflex_node_4_name" {
   description = "Hostname for storage node 4"
   type        = string
@@ -180,6 +195,11 @@ variable "powerflex_node_4_name" {
 
 variable "powerflex_node_4_ip" {
   description = "IP address for storage node 4"
+  type        = string
+}
+
+variable "powerflex_node_4_ip_rep" {
+  description = "replication IP address for storage node 4"
   type        = string
 }
 
