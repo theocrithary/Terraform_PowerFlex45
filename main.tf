@@ -477,8 +477,6 @@ resource "vsphere_virtual_machine" "powerflex-node-1" {
       network_interface {
         ipv4_address = var.powerflex_node_1_ip
         ipv4_netmask = var.subnet_netmask
-        ipv4_address = var.powerflex_node_1_ip_rep
-        ipv4_netmask = var.subnet_netmask
       }
       ipv4_gateway = var.subnet_gateway
       dns_server_list = [var.dns_server_list]
@@ -522,8 +520,6 @@ resource "vsphere_virtual_machine" "powerflex-node-2" {
       network_interface {
         ipv4_address = var.powerflex_node_2_ip
         ipv4_netmask = var.subnet_netmask
-        ipv4_address = var.powerflex_node_2_ip_rep
-        ipv4_netmask = var.subnet_netmask
       }
       ipv4_gateway = var.subnet_gateway
       dns_server_list = [var.dns_server_list]
@@ -563,8 +559,6 @@ resource "vsphere_virtual_machine" "powerflex-node-3" {
     customize {
       network_interface {
         ipv4_address = var.powerflex_node_3_ip
-        ipv4_netmask = var.subnet_netmask
-        ipv4_address = var.powerflex_node_3_ip_rep
         ipv4_netmask = var.subnet_netmask
       }
       ipv4_gateway = var.subnet_gateway
@@ -606,8 +600,6 @@ resource "vsphere_virtual_machine" "powerflex-node-4" {
       network_interface {
         ipv4_address = var.powerflex_node_4_ip
         ipv4_netmask = var.subnet_netmask
-        ipv4_address = var.powerflex_node_4_ip_rep
-        ipv4_netmask = var.subnet_netmask
       }
       ipv4_gateway = var.subnet_gateway
       dns_server_list = [var.dns_server_list]
@@ -644,7 +636,7 @@ resource "null_resource" "powerflex_node_1_changerootpassword" {
       "sudo sed -i 's/#PasswordAuthentication no/PasswordAuthentication yes/g;s/#PasswordAuthentication yes/PasswordAuthentication yes/g' /etc/ssh/sshd_config",
       "sudo sed -i 's/#PermitRootLogin prohibit-password/PermitRootLogin yes/' /etc/ssh/sshd_config",
       "sudo service sshd restart",
-      "echo RESTARTING SSH SERVICE"
+      "echo RESTARTING SSH SERVICE",
     ]
   }
 }
