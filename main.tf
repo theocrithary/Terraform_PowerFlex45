@@ -478,6 +478,10 @@ resource "vsphere_virtual_machine" "powerflex-node-1" {
         ipv4_address = var.powerflex_node_1_ip
         ipv4_netmask = var.subnet_netmask
       }
+      network_interface {
+        ipv4_address = var.powerflex_node_1_ip_rep
+        ipv4_netmask = var.subnet_netmask
+      }
       ipv4_gateway = var.subnet_gateway
       dns_server_list = [var.dns_server_list]
       dns_suffix_list = [var.dns_suffix]
@@ -516,6 +520,10 @@ resource "vsphere_virtual_machine" "powerflex-node-2" {
     customize {
       network_interface {
         ipv4_address = var.powerflex_node_2_ip
+        ipv4_netmask = var.subnet_netmask
+      }
+      network_interface {
+        ipv4_address = var.powerflex_node_2_ip_rep
         ipv4_netmask = var.subnet_netmask
       }
       ipv4_gateway = var.subnet_gateway
@@ -558,6 +566,10 @@ resource "vsphere_virtual_machine" "powerflex-node-3" {
         ipv4_address = var.powerflex_node_3_ip
         ipv4_netmask = var.subnet_netmask
       }
+      network_interface {
+        ipv4_address = var.powerflex_node_3_ip_rep
+        ipv4_netmask = var.subnet_netmask
+      }
       ipv4_gateway = var.subnet_gateway
       dns_server_list = [var.dns_server_list]
       dns_suffix_list = [var.dns_suffix]
@@ -596,6 +608,10 @@ resource "vsphere_virtual_machine" "powerflex-node-4" {
     customize {
       network_interface {
         ipv4_address = var.powerflex_node_4_ip
+        ipv4_netmask = var.subnet_netmask
+      }
+      network_interface {
+        ipv4_address = var.powerflex_node_4_ip_rep
         ipv4_netmask = var.subnet_netmask
       }
       ipv4_gateway = var.subnet_gateway
