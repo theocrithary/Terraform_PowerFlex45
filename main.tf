@@ -500,9 +500,6 @@ resource "vsphere_virtual_machine" "powerflex-node-2" {
   network_interface {
     network_id = data.vsphere_network.network.id
   }
-  network_interface {
-    network_id = data.vsphere_network.rep_network.id
-  }
   disk {
     label = "disk0"
     size  = 32
