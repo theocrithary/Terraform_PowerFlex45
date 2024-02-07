@@ -716,7 +716,7 @@ resource "null_resource" "powerflex_node_1_bootstrap" {
     inline = [
       "apt update -y",
       "apt install unzip sshpass numactl libaio1 wget libapr1 libaprutil1 bash-completion binutils openjdk-11-jdk-headless smartmontools sg3-utils hdparm pciutils sysstat jq openssl libaio1 linux-image-extra-virtual libnuma1 -y",
-      "sed -i '/- ${var.powerflex_node_1_ip}/a${indent(8,- ${var.powerflex_node_1_ip_rep}/${var.subnet_netmask})}' /etc/netplan/99-netcfg-vmware.yaml",
+      "sed -i '/- ${var.powerflex_node_1_ip}/a${indent(8,"- ${var.powerflex_node_1_ip_rep}/${var.subnet_netmask}")}' /etc/netplan/99-netcfg-vmware.yaml",
       "netplan apply"
     ]
   }
