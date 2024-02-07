@@ -716,7 +716,7 @@ resource "null_resource" "powerflex_node_1_bootstrap" {
     inline = [
       "apt update -y",
       "apt install unzip sshpass numactl libaio1 wget libapr1 libaprutil1 bash-completion binutils openjdk-11-jdk-headless smartmontools sg3-utils hdparm pciutils sysstat jq openssl libaio1 linux-image-extra-virtual libnuma1 -y",
-      "sed -i '/- ${var.powerflex_node_1_ip}/a\ \ \ \ \ \ \ \ - ${var.powerflex_node_1_ip_rep}/${var.subnet_netmask}' /etc/netplan/99-netcfg-vmware.yaml",
+      "sed -i 's/- ${var.powerflex_node_1_ip}/a\        - ${var.powerflex_node_1_ip_rep}/${var.subnet_netmask}' /etc/netplan/99-netcfg-vmware.yaml",
       "netplan apply"
     ]
   }
@@ -735,7 +735,7 @@ resource "null_resource" "powerflex_node_2_bootstrap" {
     inline = [
       "apt update -y",
       "apt install unzip sshpass numactl libaio1 wget libapr1 libaprutil1 bash-completion binutils openjdk-11-jdk-headless smartmontools sg3-utils hdparm pciutils sysstat jq openssl libaio1 linux-image-extra-virtual libnuma1 -y",
-      "sed -i '/- ${var.powerflex_node_2_ip}/a\ \ \ \ \ \ \ \ - ${var.powerflex_node_2_ip_rep}/${var.subnet_netmask}' /etc/netplan/99-netcfg-vmware.yaml",
+      "sed -i 's/- ${var.powerflex_node_2_ip}/a\        - ${var.powerflex_node_2_ip_rep}/${var.subnet_netmask}' /etc/netplan/99-netcfg-vmware.yaml",
       "netplan apply"
     ]
   }
@@ -754,7 +754,7 @@ resource "null_resource" "powerflex_node_3_bootstrap" {
     inline = [
       "apt update -y",
       "apt install unzip sshpass numactl libaio1 wget libapr1 libaprutil1 bash-completion binutils openjdk-11-jdk-headless smartmontools sg3-utils hdparm pciutils sysstat jq openssl libaio1 linux-image-extra-virtual libnuma1 -y",
-      "sed -i '/- ${var.powerflex_node_3_ip}/a\ \ \ \ \ \ \ \ - ${var.powerflex_node_3_ip_rep}/${var.subnet_netmask}' /etc/netplan/99-netcfg-vmware.yaml",
+      "sed -i 's/- ${var.powerflex_node_3_ip}/a\        - ${var.powerflex_node_3_ip_rep}/${var.subnet_netmask}' /etc/netplan/99-netcfg-vmware.yaml",
       "netplan apply"
     ]
   }
@@ -773,7 +773,7 @@ resource "null_resource" "powerflex_node_4_bootstrap" {
     inline = [
       "apt update -y",
       "apt install unzip sshpass numactl libaio1 wget libapr1 libaprutil1 bash-completion binutils openjdk-11-jdk-headless smartmontools sg3-utils hdparm pciutils sysstat jq openssl libaio1 linux-image-extra-virtual libnuma1 -y",
-      "sed -i '/- ${var.powerflex_node_4_ip}/a\ \ \ \ \ \ \ \ - ${var.powerflex_node_4_ip_rep}/${var.subnet_netmask}' /etc/netplan/99-netcfg-vmware.yaml",
+      "sed -i 's/- ${var.powerflex_node_4_ip}/a\        - ${var.powerflex_node_4_ip_rep}/${var.subnet_netmask}' /etc/netplan/99-netcfg-vmware.yaml",
       "netplan apply"
     ]
   }
