@@ -16,7 +16,6 @@
       - Disk 1: 32GB
       - Disk 2: 200GB
       - NIC 1: primary network
-      - NIC 2: replication network
 - All 3 templates should be added to a single content library with the names of the library and templates added to the tfvars file we will setup in the next steps
 
 ## SSH to the admin VM
